@@ -9,7 +9,7 @@ import os
 
 # This python file serves as storage for functions that can be used throughout the thesis
 
-def get_happy_path_log(load_path, save_path) :
+def get_happy_path_log(load_path, save_path=None) :
     """
     Function to generate the happy path log of an JSONOCEL-file and save it as JSONOCEL.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -20,8 +20,9 @@ def get_happy_path_log(load_path, save_path) :
     ocel = ocel_import_factory.apply(load_path)
     # filter down on the most frequent variant
     filtered = filter_infrequent_variants(ocel, np.max(ocel.variant_frequencies) - 0.01)
-    #export the variant
-    ocel_export_factory.apply(filtered, save_path)
+    if save_path is not None:
+        #export the variant
+        ocel_export_factory.apply(filtered, save_path)
 
     return filtered
 
@@ -42,7 +43,7 @@ def save_process_model_visualization(ocel, save_path) :
 
 
 
-def create_flower_model(load_path,ots,save_path):
+def create_flower_model(load_path,ots,save_path=None):
     """
     Function to generate the flower model of an JSONOCEL-log, return it and save it as svg.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -78,7 +79,8 @@ def create_flower_model(load_path,ots,save_path):
                 t_new.out_arcs.add(out_a)
     #create the flower model with the given set of places, transitions, and arcs
     flower_ocpn = ObjectCentricPetriNet(places = places, transitions = transitions, arcs = arcs)
-    # generate a visualization of the flower model and save it as svg
-    gviz = ocpn_vis_factory.apply(flower_ocpn, parameters={'format': 'svg'})
-    ocpn_vis_factory.save(gviz, save_path)
+    if save_path is not None:
+        # generate a visualization of the flower model and save it as svg
+        gviz = ocpn_vis_factory.apply(flower_ocpn, parameters={'format': 'svg'})
+        ocpn_vis_factory.save(gviz, save_path)
     return flower_ocpn
