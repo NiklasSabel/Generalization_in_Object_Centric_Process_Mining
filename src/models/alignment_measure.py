@@ -100,21 +100,28 @@ def alignment_measure_states(ocel,ocpn):
                 targets[arc.target.name] = [arc.source.name]
     #get the list of all possible states for our model
     states = list(targets.values())
+    #get the list of all possible keys in our targets dictionary
+    keys_list = list(targets.keys())
+    #define a counting variable for the number of states
+    i = 0
     # for each valid transition/event -> for computing reasons(efficiency), we work with a small difference to above
     for state in states:
         # create an empty list where we can store all enabled transitions in the specific prior state
         enabled= []
+        #define an empty string that should hold the name of the event we are currently investigating
+        event_name = keys_list[i]
         # get the list of all events that are simultaneously in the current state
         for key in targets:
             # we check if the value is the same as the state or if the value of another key is a subset, because then it is also enabled
             if (state == targets[key]) or (set(targets[key]).issubset(set(state))):
                 enabled.append(key)
+
         # number of activities that happened in the state
         w = len(enabled)
         # number of times this state has visited in the log
         n = len(log[log.isin(enabled)])
         # number of times this state was visited in the log
-        freq = len(log[log.isin(enabled)])
+        freq = len(log[log == event_name])
         #print(w) #used for debugging
         #print(n) #used for debugging
         #print(freq) #used for debugging
@@ -122,5 +129,7 @@ def alignment_measure_states(ocel,ocpn):
             pnew.append(freq*(w*(w+1))/(n*(n-1)))
         else:
             pnew.append(freq*1)
+        #increase the counting variable
+        i += 1
         #derive the final generalization value
     return np.round((1 - np.sum(pnew)/len(states)),4)
