@@ -8,7 +8,7 @@ def baseline_measure(ocel,ocpn,activity_name,activity_id):
        :param ocpn: corresponding object-centric petri-net, type: object-centric petri-net
        :param activity_name: column name of the activity column in the log, type: string
        :param activity_id: column name of the activity id in the log, type: string
-       :return: flower model, type: object-centric petri net
+       :return: final value of the formula, type: float rounded to 4 digits
     """
     # We define an empty list, where we store the values used in the baseline formula
     executions = []
