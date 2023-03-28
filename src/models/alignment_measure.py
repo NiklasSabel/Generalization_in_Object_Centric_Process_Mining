@@ -22,9 +22,9 @@ def filter_case_variants(ocel, variant_column, id_column, save_path):
     # in a next step we save the filtered dataframe as a csv file to be able to import it as an ocel-log
     filtered_df.to_csv(save_path, index=False)
 
-def alignment_measure(ocel,ocpn):
+def alignment_measure_events(ocel,ocpn):
     """
-    Function to calculate the alignment measure based on the used places inside an object-centric petri-net.
+    Function to calculate the alignment measure based on the used places summing over the events inside an object-centric petri-net.
         :param ocel: object-centric event log for which the measure should be calculated, type: ocel-log
         :param ocpn: corresponding object-centric petri-net, type: object-centric petri-net
         :return: final value of the formula, type: float rounded to 4 digits
@@ -72,3 +72,55 @@ def alignment_measure(ocel,ocpn):
             pnew.append(freq*1)
     #derive the final generalization value
     return np.round((1 - np.sum(pnew)/len(log)),4)
+
+
+def alignment_measure_states(ocel,ocpn):
+    """
+    Function to calculate the alignment measure based on the used places summing over the states inside an object-centric petri-net.
+        :param ocel: object-centric event log for which the measure should be calculated, type: ocel-log
+        :param ocpn: corresponding object-centric petri-net, type: object-centric petri-net
+        :return: final value of the formula, type: float rounded to 4 digits
+    """
+    #list for values in sum of formula
+    pnew = []
+    # We only calculate the values for "non-silent" transitions
+    transitions = [x for x in ocpn.transitions if not x.silent]
+    # dictionary to store each activity as key and a list of its prior states/places as value
+    targets = {}
+    # get a list of all activities that have been performed in the log
+    log = ocel.log.log.event_activity
+    for arc in ocpn.arcs:
+        # for each arc, check if our target is a valid (non-silent) transition
+        if arc.target in transitions:
+            # load all the prior places of a valid transition into a dictionary, where the key is the transition and the value
+            # a list of all directly prior places
+            if arc.target.name in targets:
+                targets[arc.target.name].append(arc.source.name)
+            else:
+                targets[arc.target.name] = [arc.source.name]
+    #get the list of all possible states for our model
+    states = list(targets.values())
+    # for each valid transition/event -> for computing reasons(efficiency), we work with a small difference to above
+    for state in states:
+        # create an empty list where we can store all enabled transitions in the specific prior state
+        enabled= []
+        # get the list of all events that are simultaneously in the current state
+        for key in targets:
+            # we check if the value is the same as the state or if the value of another key is a subset, because then it is also enabled
+            if (state == targets[key]) or (set(targets[key]).issubset(set(state))):
+                enabled.append(key)
+        # number of activities that happened in the state
+        w = len(enabled)
+        # number of times this state has visited in the log
+        n = len(log[log.isin(enabled)])
+        # number of times this state was visited in the log
+        freq = len(log[log.isin(enabled)])
+        #print(w) #used for debugging
+        #print(n) #used for debugging
+        #print(freq) #used for debugging
+        if n >= w+2 :
+            pnew.append(freq*(w*(w+1))/(n*(n-1)))
+        else:
+            pnew.append(freq*1)
+        #derive the final generalization value
+    return np.round((1 - np.sum(pnew)/len(states)),4)
