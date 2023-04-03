@@ -154,3 +154,36 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
         gviz = ocpn_vis_factory.apply(variant_ocpn, parameters={'format': 'svg'})
         ocpn_vis_factory.save(gviz, save_path_visuals)
     return variant_ocpn
+
+def generate_variant_log(ocel, save_path, filtered = False):
+    """
+    Function to generate the variant log of an JSONOCEL-log, return it and save it as csv.
+    :param ocel: given OCEL-log, type: OCEL-Log
+    :param save_path: path for the saved variant log as csv file, type: string
+    :param filtered: boolean value to indicate if the log was filtered before, type: boolean
+    :return: variant log, type: pandas dataframe
+    """
+    if filtered == False:
+        #generate the variant column by executing ocel.variants once only if the log was not filtered before, because then
+        # we already have a variant column given
+        ocel.variants
+    # get a copy of df
+    df = ocel.log.log.copy()
+    # create a mapping dictionary of integer values to input strings
+    if filtered == False:
+        # if not filtered, the column incorporates a list
+        values = sorted(set(val[0] for val in df['event_variant']))
+    else:
+        # if filtered, the column incorporates a string
+        values = sorted(set(val[1] for val in df['event_variant']))
+    mapping = {value: f'{value}' for value in values}
+    # apply the mapping to the 'event_activity' column and concatenate with the 'event_variant' column to e.g., "Event_0" to
+    #represent the nodes of our variant petri net
+    if filtered == False:
+        # if not filtered, the column incorporates a list
+        df['event_activity'] = df.apply(lambda x: f"{x['event_activity']}_{mapping[x['event_variant'][0]]}", axis=1)
+    else:
+        # if filtered, the column incorporates a string
+        df['event_activity'] = df.apply(lambda x: f"{x['event_activity']}_{mapping[x['event_variant'][1]]}", axis=1)
+    df.to_csv(save_path)
+    return df
