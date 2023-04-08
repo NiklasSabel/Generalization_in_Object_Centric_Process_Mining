@@ -8,6 +8,7 @@ from ocpa.objects.log.importer.csv import factory as ocel_import_factory_csv
 import re
 import numpy as np
 import os
+from tqdm import tqdm
 
 # This python file serves as storage for functions that can be used throughout the thesis
 
@@ -99,28 +100,30 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
     #list to save the variant nets
     ocpn_nets = []
     n = 0 # running variable for number of variants
-    for variant in ocel.variants:
+    for variant in tqdm(ocel.variants, desc="Generating Variant Models"):
         # for each variant filter the log on all the cases belonging to this variant
-        #filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
+        # filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
         # save the pandas df to a csv file such that we can reload it as object-centric log
         filename = f"{save_path_logs}{n}.csv"
-        #filtered.to_csv(filename)
-        parameters = {"obj_names": object_types,
-                  "val_names": [],
-                  "act_name": "event_activity",
-                  "time_name": "event_timestamp",
-                  "sep": ","}
+        # filtered.to_csv(filename)
+        parameters = {
+            "obj_names": object_types,
+            "val_names": [],
+            "act_name": "event_activity",
+            "time_name": "event_timestamp",
+            "sep": ",",
+        }
         ocel_new = ocel_import_factory_csv.apply(file_path=filename, parameters=parameters)
         ocpn_new = ocpn_discovery_factory.apply(ocel_new, parameters={"debug": False})
         # append all the variant petri nets to our predefined list
         ocpn_nets.append(ocpn_new)
-        n = n + 1
-    #define empty lists for the final sets of arcs, places, and transitions for the final petri net
+        n += 1
+        # define empty lists for the final sets of arcs, places, and transitions for the final petri net
     Arcs = []
-    Places =[]
+    Places = []
     Transitions = []
     # for every petri net in our list
-    for i in range(len(ocpn_nets)):
+    for i in tqdm(range(len(ocpn_nets)), desc="Processing Variant Nets"):
         # first check the places if they are initial or final places
         for place in ocpn_nets[i].places:
             if (place.initial == True) | (place.final == True):
@@ -146,13 +149,15 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
         # add all the arcs to our final set, we do not need to care about the names anymore because these are adopted from the transition and place definitions
         for arc in ocpn_nets[i].arcs:
             Arcs.append(arc)
+    print('#########Start generating Object-Centric Petri Net#########')
     # we generate the final object-centric petri net with our lists of places, transitions, and arcs
     variant_ocpn = ObjectCentricPetriNet(places = Places, transitions = Transitions, arcs = Arcs)
-    if save_path_visuals is not None:
+    print('#########Finished generating Object-Centric Petri Net#########')
+    #if save_path_visuals is not None:
         #change the environment path for visualization
-        os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
-        gviz = ocpn_vis_factory.apply(variant_ocpn, parameters={'format': 'svg'})
-        ocpn_vis_factory.save(gviz, save_path_visuals)
+    #    os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+    #    gviz = ocpn_vis_factory.apply(variant_ocpn, parameters={'format': 'svg'})
+    #    ocpn_vis_factory.save(gviz, save_path_visuals)
     return variant_ocpn
 
 def generate_variant_log(ocel, save_path, filtered = False):

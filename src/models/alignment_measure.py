@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 def filter_case_variants(ocel, variant_column, id_column, save_path):
     """
@@ -37,7 +38,7 @@ def alignment_measure_events(ocel,ocpn):
     transitions = [x for x in ocpn.transitions if not x.silent]
     # dictionary to store each activity as key and a list of its prior states/places as value
     targets = {}
-    for arc in ocpn.arcs:
+    for arc in tqdm(ocpn.arcs, desc="Check the arcs"):
         # for each arc, check if our target is a valid (non-silent) transition
         if arc.target in transitions:
             # load all the prior places of a valid transition into a dictionary, where the key is the transition and the value
@@ -47,7 +48,7 @@ def alignment_measure_events(ocel,ocpn):
             else:
                 targets[arc.target.name] = [arc.source.name]
     # for each valid transition/event -> for computing reasons(efficiency), we work with a small difference to above
-    for event in transitions:
+    for event in tqdm(transitions, desc="Save the transitions"):
         # create an empty list where we can store all enabled transitions in the specific prior place
         enabled= []
         # print(event) #used for debugging
@@ -89,7 +90,7 @@ def alignment_measure_states(ocel,ocpn):
     targets = {}
     # get a list of all activities that have been performed in the log
     log = ocel.log.log.event_activity
-    for arc in ocpn.arcs:
+    for arc in tqdm(ocpn.arcs, desc="Check the arcs"):
         # for each arc, check if our target is a valid (non-silent) transition
         if arc.target in transitions:
             # load all the prior places of a valid transition into a dictionary, where the key is the transition and the value
@@ -105,7 +106,7 @@ def alignment_measure_states(ocel,ocpn):
     #define a counting variable for the number of states
     i = 0
     # for each valid transition/event -> for computing reasons(efficiency), we work with a small difference to above
-    for state in states:
+    for state in tqdm(states, desc="Save the states"):
         # create an empty list where we can store all enabled transitions in the specific prior state
         enabled= []
         #define an empty string that should hold the name of the event we are currently investigating
