@@ -52,7 +52,7 @@ def alignment_measure_events(ocel,ocpn):
         # create an empty list where we can store all enabled transitions in the specific prior place
         enabled= []
         # print(event) #used for debugging
-        # get the list of all events that are simultaneously in the current state
+        # get the list of all events that are simultaneously possible in the current state
         for key in targets:
             # we check if the value is the same or if the value of another key is a subset, because then it is also enabled
             if (targets[event.name] == targets[key]) or (set(targets[key]).issubset(set(targets[event.name]))):
