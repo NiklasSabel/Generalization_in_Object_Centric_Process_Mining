@@ -162,6 +162,10 @@ def negative_events_without_weighting(ocel, ocpn):
                     # check if an event has two or more activities that need to be executed before the event can take place, if not add events to enabled
                     if len(filtered_preceeding_events[possible_enabled[i]]) < 2:
                         enabled.append(possible_enabled[i])
+                    # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
+                    elif filtered_preceeding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
+                        possible_enabled[i]]:
+                        enabled.append(possible_enabled[i])
                     else:
                         # if yes, check if all the needed activities have already been performed in this trace
                         if all(elem in trace for elem in filtered_preceeding_events[possible_enabled[i]]):
