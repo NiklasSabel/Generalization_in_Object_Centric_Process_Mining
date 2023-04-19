@@ -1,7 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore')
 
-from ocpa.objects.log.importer.csv import factory as ocel_import_factory_csv
+from ocpa.objects.log.importer.ocel import factory as ocel_import_factory
 import pickle
 import logging
 import numpy as np
@@ -203,14 +203,8 @@ logger.addHandler(file_handler)
 logger.info('This log file shows the results of the variant model negative events for the BPI log')
 
 
-filename_variant = "/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi2017_variant_log.csv"
-object_types = ["application","offer"]
-parameters = {"obj_names": object_types,
-              "val_names": [],
-              "act_name": "event_activity",
-              "time_name": "event_timestamp",
-              "sep": ','}
-ocel_variant = ocel_import_factory_csv.apply(file_path=filename_variant, parameters=parameters)
+filename_variant = "/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi2017_variant_log.jsonocel"
+ocel_variant = ocel_import_factory.apply(filename_variant)
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
