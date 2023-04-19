@@ -209,12 +209,13 @@ parameters = {"obj_names": object_types,
               "val_names": [],
               "act_name": "event_activity",
               "time_name": "event_timestamp",
-              "sep": ","}
+              "sep": ','}
 ocel_variant = ocel_import_factory_csv.apply(file_path=filename_variant, parameters=parameters)
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
 
 value = negative_events_without_weighting (ocel_variant, variant_ocpn)
+print(value)
 logger.info("*** Evaluate ***")
 logger.info('The value of generalization is %s', value)
