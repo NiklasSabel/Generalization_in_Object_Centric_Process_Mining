@@ -47,11 +47,7 @@ def negative_events_without_weighting(ocel, ocpn):
     :param ocpn: corresponding object-centric petri-net, type: object-centric petri-net
     :return generalization: final value of the formula, type: float rounded to 4 digits
     """
-    # since the process execution mappings have lists of length one,
-    # we create another dictionary that only contains the the value inside the list to be able to derive the case
-    mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
-    # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
-    ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
+
     # generate a list of unique events in the event log
     events = np.unique(ocel.log.log.event_activity)
     # dictionary to store each activity as key and a list of its prior states/places as value
