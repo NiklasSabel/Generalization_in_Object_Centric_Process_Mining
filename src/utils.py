@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 # This python file serves as storage for functions that can be used throughout the thesis
 
-def get_happy_path_log(load_path, save_path=None) :
+def get_happy_path_log(load_path, save_path=None, parameters =None) :
     """
     Function to generate the happy path log of an JSONOCEL-file and save it as JSONOCEL.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -20,7 +20,7 @@ def get_happy_path_log(load_path, save_path=None) :
     :return: preprocessed event log including only the happy path, type: ocel-log
     """
     # import the log
-    ocel = ocel_import_factory.apply(load_path)
+    ocel = ocel_import_factory.apply(load_path, parameters = parameters)
     # filter down on the most frequent variant
     filtered = filter_infrequent_variants(ocel, np.max(ocel.variant_frequencies) - 0.01)
     if save_path is not None:
@@ -46,7 +46,7 @@ def save_process_model_visualization(ocel, save_path) :
 
 
 
-def create_flower_model(load_path,ots,save_path=None):
+def create_flower_model(load_path,ots,save_path=None, parameters = None):
     """
     Function to generate the flower model of an JSONOCEL-log, return it and save it as svg.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -57,7 +57,7 @@ def create_flower_model(load_path,ots,save_path=None):
     # change the environment path for visualization
     os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
     #import the JSONOCEL-log and transform it into an object-centri petri net
-    ocel = ocel_import_factory.apply(load_path)
+    ocel = ocel_import_factory.apply(load_path, parameters = parameters)
     ocpn = ocpn_discovery_factory.apply(ocel, parameters={"debug": False})
     # define lists for the final set of arcs, transitions, and places of the flower model
     arcs = []
@@ -102,10 +102,10 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
     n = 0 # running variable for number of variants
     for variant in tqdm(ocel.variants, desc="Generating Variant Models"):
         # for each variant filter the log on all the cases belonging to this variant
-        # filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
+        filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
         # save the pandas df to a csv file such that we can reload it as object-centric log
         filename = f"{save_path_logs}{n}.csv"
-        # filtered.to_csv(filename)
+        filtered.to_csv(filename)
         parameters = {
             "obj_names": object_types,
             "val_names": [],
@@ -153,11 +153,11 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
     # we generate the final object-centric petri net with our lists of places, transitions, and arcs
     variant_ocpn = ObjectCentricPetriNet(places = Places, transitions = Transitions, arcs = Arcs)
     print('#########Finished generating Object-Centric Petri Net#########')
-    #if save_path_visuals is not None:
+    if save_path_visuals is not None:
         #change the environment path for visualization
-    #    os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
-    #    gviz = ocpn_vis_factory.apply(variant_ocpn, parameters={'format': 'svg'})
-    #    ocpn_vis_factory.save(gviz, save_path_visuals)
+        os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+        gviz = ocpn_vis_factory.apply(variant_ocpn, parameters={'format': 'svg'})
+        ocpn_vis_factory.save(gviz, save_path_visuals)
     return variant_ocpn
 
 def generate_variant_log(ocel, save_path, filtered = False):
