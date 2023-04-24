@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 # This python file serves as storage for functions that can be used throughout the thesis
 
-def get_happy_path_log(load_path, save_path=None, parameters =None) :
+def get_happy_path_log(load_path, save_path=None) :
     """
     Function to generate the happy path log of an JSONOCEL-file and save it as JSONOCEL.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -20,7 +20,7 @@ def get_happy_path_log(load_path, save_path=None, parameters =None) :
     :return: preprocessed event log including only the happy path, type: ocel-log
     """
     # import the log
-    ocel = ocel_import_factory.apply(load_path, parameters = parameters)
+    ocel = ocel_import_factory.apply(load_path)
     # filter down on the most frequent variant
     filtered = filter_infrequent_variants(ocel, np.max(ocel.variant_frequencies) - 0.01)
     if save_path is not None:
@@ -46,7 +46,7 @@ def save_process_model_visualization(ocel, save_path) :
 
 
 
-def create_flower_model(load_path,ots,save_path=None, parameters = None):
+def create_flower_model(load_path,ots,save_path=None):
     """
     Function to generate the flower model of an JSONOCEL-log, return it and save it as svg.
     :param load_path: path to the original JSONOCEL-log, type: string
@@ -57,7 +57,7 @@ def create_flower_model(load_path,ots,save_path=None, parameters = None):
     # change the environment path for visualization
     os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
     #import the JSONOCEL-log and transform it into an object-centri petri net
-    ocel = ocel_import_factory.apply(load_path, parameters = parameters)
+    ocel = ocel_import_factory.apply(load_path)
     ocpn = ocpn_discovery_factory.apply(ocel, parameters={"debug": False})
     # define lists for the final set of arcs, transitions, and places of the flower model
     arcs = []

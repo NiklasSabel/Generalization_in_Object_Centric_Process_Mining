@@ -7,489 +7,489 @@
 <svg width="903pt" height="1591pt"
  viewBox="0.00 0.00 903.00 1590.88" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1586.88)">
-<!-- PURCHREQ1 -->
+<!-- INVOICE2 -->
 <g id="node1" class="node">
-<title>PURCHREQ1</title>
-<ellipse fill="#05b202" stroke="#05b202" cx="502" cy="-1526.03" rx="56.7" ry="56.7"/>
-<text text-anchor="middle" x="502" y="-1522.63" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ1</text>
-</g>
-<!-- Create Purchase Requisition -->
-<g id="node28" class="node">
-<title>Create Purchase Requisition</title>
-<polygon fill="none" stroke="black" points="775,-1433.18 357,-1433.18 357,-1385.18 775,-1385.18 775,-1433.18"/>
-<text text-anchor="middle" x="566" y="-1400.38" font-family="Times New Roman,serif" font-size="36.00">Create Purchase Requisition</text>
-</g>
-<!-- PURCHREQ1&#45;&gt;Create Purchase Requisition -->
-<g id="edge22" class="edge">
-<title>PURCHREQ1&#45;&gt;Create Purchase Requisition</title>
-<path fill="none" stroke="#05b202" d="M529.33,-1475.99C535.49,-1464.92 541.9,-1453.43 547.59,-1443.21"/>
-<polygon fill="#05b202" stroke="#05b202" points="550.47,-1445.23 552.28,-1434.79 544.36,-1441.82 550.47,-1445.23"/>
-</g>
-<!-- PURCHREQ2 -->
-<g id="node2" class="node">
-<title>PURCHREQ2</title>
-<ellipse fill="#05b202" stroke="#05b202" cx="631" cy="-1054.83" rx="56.7" ry="56.7"/>
-<text text-anchor="middle" x="631" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ2</text>
-</g>
-<!-- MATERIAL4 -->
-<g id="node3" class="node">
-<title>MATERIAL4</title>
-<ellipse fill="none" stroke="#a13ccd" cx="315" cy="-294.34" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="315" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">MATERIAL4</text>
-</g>
-<!-- Goods Issue -->
-<g id="node31" class="node">
-<title>Goods Issue</title>
-<polygon fill="none" stroke="black" points="331,-200.23 139,-200.23 139,-152.23 331,-152.23 331,-200.23"/>
-<text text-anchor="middle" x="235" y="-167.43" font-family="Times New Roman,serif" font-size="36.00">Goods Issue</text>
-</g>
-<!-- MATERIAL4&#45;&gt;Goods Issue -->
-<g id="edge3" class="edge">
-<title>MATERIAL4&#45;&gt;Goods Issue</title>
-<path fill="none" stroke="#a13ccd" d="M283.11,-250.58C274.1,-237.51 264.39,-223.41 255.96,-211.17"/>
-<path fill="none" stroke="white" d="M284.76,-249.44C275.75,-236.37 266.04,-222.28 257.61,-210.04"/>
-<path fill="none" stroke="#a13ccd" d="M286.4,-248.31C277.39,-235.24 267.68,-221.14 259.25,-208.91"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="260.57,-208.18 252.02,-201.93 254.81,-212.15 260.57,-208.18"/>
-</g>
-<!-- MATERIAL7 -->
-<g id="node4" class="node">
-<title>MATERIAL7</title>
-<ellipse fill="#a13ccd" stroke="#a13ccd" cx="631" cy="-1526.03" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="631" y="-1522.63" font-family="Times New Roman,serif" font-size="13.00">MATERIAL7</text>
-</g>
-<!-- MATERIAL7&#45;&gt;Create Purchase Requisition -->
-<g id="edge35" class="edge">
-<title>MATERIAL7&#45;&gt;Create Purchase Requisition</title>
-<path fill="none" stroke="#a13ccd" d="M603.01,-1479.63C596.26,-1467.71 589.15,-1455.14 582.88,-1444.06"/>
-<path fill="none" stroke="white" d="M604.75,-1478.64C598.01,-1466.73 590.89,-1454.15 584.62,-1443.07"/>
-<path fill="none" stroke="#a13ccd" d="M606.49,-1477.66C599.75,-1465.74 592.63,-1453.17 586.36,-1442.09"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="587.85,-1441.68 579.88,-1434.7 581.76,-1445.13 587.85,-1441.68"/>
-</g>
-<!-- MATERIAL8 -->
-<g id="node5" class="node">
-<title>MATERIAL8</title>
-<ellipse fill="#a13ccd" stroke="#a13ccd" cx="235" cy="-58.11" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="235" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">MATERIAL8</text>
-</g>
-<!-- PURCHORD5 -->
-<g id="node6" class="node">
-<title>PURCHORD5</title>
-<ellipse fill="#ba0d39" stroke="#ba0d39" cx="793" cy="-58.11" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="793" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">PURCHORD5</text>
-</g>
-<!-- MATERIAL1 -->
-<g id="node7" class="node">
-<title>MATERIAL1</title>
-<ellipse fill="none" stroke="#a13ccd" cx="760" cy="-1054.83" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="760" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">MATERIAL1</text>
-</g>
-<!-- Receive Goods -->
-<g id="node27" class="node">
-<title>Receive Goods</title>
-<polygon fill="none" stroke="black" points="622,-960.72 390,-960.72 390,-912.72 622,-912.72 622,-960.72"/>
-<text text-anchor="middle" x="506" y="-927.92" font-family="Times New Roman,serif" font-size="36.00">Receive Goods</text>
-</g>
-<!-- MATERIAL1&#45;&gt;Receive Goods -->
-<g id="edge13" class="edge">
-<title>MATERIAL1&#45;&gt;Receive Goods</title>
-<path fill="none" stroke="#a13ccd" d="M721.47,-1016.82C713.56,-1010.02 704.78,-1003.44 696.01,-998.46 673.17,-985.42 646.81,-974.85 621.32,-966.55"/>
-<path fill="none" stroke="white" d="M722.77,-1015.3C714.76,-1008.42 705.98,-1001.84 697,-996.72 673.91,-983.56 647.55,-973 621.94,-964.65"/>
-<path fill="none" stroke="#a13ccd" d="M724.08,-1013.78C715.96,-1006.82 707.18,-1000.24 697.99,-994.98 674.66,-981.7 648.3,-971.14 622.56,-962.75"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="623.06,-961.33 612.47,-961.66 620.95,-968.01 623.06,-961.33"/>
-</g>
-<!-- MATERIAL3 -->
-<g id="node8" class="node">
-<title>MATERIAL3</title>
-<ellipse fill="none" stroke="#a13ccd" cx="410" cy="-582.38" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="410" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">MATERIAL3</text>
-</g>
-<!-- Plan Goods Issue -->
-<g id="node30" class="node">
-<title>Plan Goods Issue</title>
-<polygon fill="none" stroke="black" points="517.5,-462.36 254.5,-462.36 254.5,-414.36 517.5,-414.36 517.5,-462.36"/>
-<text text-anchor="middle" x="386" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Plan Goods Issue</text>
-</g>
-<!-- MATERIAL3&#45;&gt;Plan Goods Issue -->
-<g id="edge2" class="edge">
-<title>MATERIAL3&#45;&gt;Plan Goods Issue</title>
-<path fill="none" stroke="#a13ccd" d="M399.16,-529.23C396.06,-510.92 392.67,-490.84 389.88,-474.35"/>
-<path fill="none" stroke="white" d="M401.13,-528.9C398.04,-510.59 394.64,-490.51 391.86,-474.01"/>
-<path fill="none" stroke="#a13ccd" d="M403.1,-528.56C400.01,-510.25 396.62,-490.17 393.83,-473.68"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="395.32,-473.48 390.2,-464.2 388.41,-474.65 395.32,-473.48"/>
-</g>
-<!-- MATERIAL6 -->
-<g id="node9" class="node">
-<title>MATERIAL6</title>
-<ellipse fill="none" stroke="#a13ccd" cx="154" cy="-294.34" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="154" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">MATERIAL6</text>
-</g>
-<!-- MATERIAL6&#45;&gt;Goods Issue -->
-<g id="edge26" class="edge">
-<title>MATERIAL6&#45;&gt;Goods Issue</title>
-<path fill="none" stroke="#a13ccd" d="M182.98,-248.3C192.1,-235.23 201.93,-221.13 210.47,-208.9"/>
-<path fill="none" stroke="white" d="M184.62,-249.44C193.74,-236.37 203.58,-222.28 212.11,-210.04"/>
-<path fill="none" stroke="#a13ccd" d="M186.26,-250.59C195.38,-237.51 205.22,-223.42 213.75,-211.18"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="214.92,-212.13 217.77,-201.92 209.18,-208.12 214.92,-212.13"/>
-</g>
-<!-- PURCHORD2 -->
-<g id="node10" class="node">
-<title>PURCHORD2</title>
-<ellipse fill="none" stroke="#ba0d39" cx="774" cy="-582.38" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="774" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">PURCHORD2</text>
-</g>
-<!-- Receive Invoice -->
-<g id="node33" class="node">
-<title>Receive Invoice</title>
-<polygon fill="none" stroke="black" points="895,-462.36 653,-462.36 653,-414.36 895,-414.36 895,-462.36"/>
-<text text-anchor="middle" x="774" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Receive Invoice</text>
-</g>
-<!-- PURCHORD2&#45;&gt;Receive Invoice -->
-<g id="edge5" class="edge">
-<title>PURCHORD2&#45;&gt;Receive Invoice</title>
-<path fill="none" stroke="#ba0d39" d="M774,-524.02C774,-507.13 774,-489.18 774,-474.17"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="777.5,-474.35 774,-464.35 770.5,-474.35 777.5,-474.35"/>
-</g>
-<!-- GDSRCPT2 -->
-<g id="node11" class="node">
-<title>GDSRCPT2</title>
-<ellipse fill="#39f6c0" stroke="#39f6c0" cx="557" cy="-58.11" rx="49.81" ry="49.81"/>
-<text text-anchor="middle" x="557" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT2</text>
-</g>
-<!-- INVOICE3 -->
-<g id="node12" class="node">
-<title>INVOICE3</title>
-<ellipse fill="#e90638" stroke="#e90638" cx="671" cy="-58.11" rx="46.22" ry="46.22"/>
-<text text-anchor="middle" x="671" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">INVOICE3</text>
-</g>
-<!-- MATERIAL5 -->
-<g id="node13" class="node">
-<title>MATERIAL5</title>
-<ellipse fill="none" stroke="#a13ccd" cx="214" cy="-582.38" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="214" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">MATERIAL5</text>
-</g>
-<!-- Verify Material -->
-<g id="node32" class="node">
-<title>Verify Material</title>
-<polygon fill="none" stroke="black" points="236,-462.36 0,-462.36 0,-414.36 236,-414.36 236,-462.36"/>
-<text text-anchor="middle" x="118" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Verify Material</text>
-</g>
-<!-- MATERIAL5&#45;&gt;Verify Material -->
-<g id="edge24" class="edge">
-<title>MATERIAL5&#45;&gt;Verify Material</title>
-<path fill="none" stroke="#a13ccd" d="M182.49,-538.34C168.27,-517.3 151.56,-492.58 138.49,-473.25"/>
-<path fill="none" stroke="white" d="M184.15,-537.22C169.93,-516.18 153.22,-491.46 140.15,-472.13"/>
-<path fill="none" stroke="#a13ccd" d="M185.81,-536.1C171.59,-515.06 154.88,-490.34 141.81,-471.01"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="143.22,-470.41 134.72,-464.09 137.42,-474.33 143.22,-470.41"/>
-</g>
-<!-- PURCHORD1 -->
-<g id="node14" class="node">
-<title>PURCHORD1</title>
-<ellipse fill="#ba0d39" stroke="#ba0d39" cx="764" cy="-1291.06" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="764" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">PURCHORD1</text>
-</g>
-<!-- Create Purchase Order -->
-<g id="node29" class="node">
-<title>Create Purchase Order</title>
-<polygon fill="none" stroke="black" points="801.5,-1196.95 460.5,-1196.95 460.5,-1148.95 801.5,-1148.95 801.5,-1196.95"/>
-<text text-anchor="middle" x="631" y="-1164.15" font-family="Times New Roman,serif" font-size="36.00">Create Purchase Order</text>
-</g>
-<!-- PURCHORD1&#45;&gt;Create Purchase Order -->
-<g id="edge37" class="edge">
-<title>PURCHORD1&#45;&gt;Create Purchase Order</title>
-<path fill="none" stroke="#ba0d39" d="M720.45,-1252.04C702.77,-1236.61 682.63,-1219.02 665.94,-1204.45"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="668.54,-1202.07 658.7,-1198.13 663.93,-1207.34 668.54,-1202.07"/>
-</g>
-<!-- PURCHORD3 -->
-<g id="node15" class="node">
-<title>PURCHORD3</title>
-<ellipse fill="none" stroke="#ba0d39" cx="380" cy="-818.6" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="380" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">PURCHORD3</text>
-</g>
-<!-- Issue Goods Receipt -->
-<g id="node26" class="node">
-<title>Issue Goods Receipt</title>
-<polygon fill="none" stroke="black" points="660.5,-724.49 351.5,-724.49 351.5,-676.49 660.5,-676.49 660.5,-724.49"/>
-<text text-anchor="middle" x="506" y="-691.69" font-family="Times New Roman,serif" font-size="36.00">Issue Goods Receipt</text>
-</g>
-<!-- PURCHORD3&#45;&gt;Issue Goods Receipt -->
-<g id="edge38" class="edge">
-<title>PURCHORD3&#45;&gt;Issue Goods Receipt</title>
-<path fill="none" stroke="#ba0d39" d="M422.66,-778.29C438.92,-763.31 457.21,-746.45 472.51,-732.36"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="474.57,-735.22 479.55,-725.86 469.82,-730.07 474.57,-735.22"/>
-</g>
-<!-- PURCHORD6 -->
-<g id="node16" class="node">
-<title>PURCHORD6</title>
-<ellipse fill="none" stroke="#ba0d39" cx="671" cy="-294.34" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="671" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">PURCHORD6</text>
+<title>INVOICE2</title>
+<ellipse fill="none" stroke="#05b202" cx="102" cy="-294.34" rx="46.22" ry="46.22"/>
+<text text-anchor="middle" x="102" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">INVOICE2</text>
 </g>
 <!-- Clear Invoice -->
-<g id="node34" class="node">
+<g id="node28" class="node">
 <title>Clear Invoice</title>
-<polygon fill="none" stroke="black" points="774,-200.23 568,-200.23 568,-152.23 774,-152.23 774,-200.23"/>
-<text text-anchor="middle" x="671" y="-167.43" font-family="Times New Roman,serif" font-size="36.00">Clear Invoice</text>
-</g>
-<!-- PURCHORD6&#45;&gt;Clear Invoice -->
-<g id="edge8" class="edge">
-<title>PURCHORD6&#45;&gt;Clear Invoice</title>
-<path fill="none" stroke="#ba0d39" d="M671,-235.63C671,-227.58 671,-219.53 671,-212.08"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="674.5,-212.12 671,-202.12 667.5,-212.12 674.5,-212.12"/>
-</g>
-<!-- GDSRCPT1 -->
-<g id="node17" class="node">
-<title>GDSRCPT1</title>
-<ellipse fill="#39f6c0" stroke="#39f6c0" cx="506" cy="-1054.83" rx="49.81" ry="49.81"/>
-<text text-anchor="middle" x="506" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT1</text>
-</g>
-<!-- GDSRCPT1&#45;&gt;Receive Goods -->
-<g id="edge18" class="edge">
-<title>GDSRCPT1&#45;&gt;Receive Goods</title>
-<path fill="none" stroke="#39f6c0" d="M506,-1004.59C506,-993.75 506,-982.49 506,-972.37"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="509.5,-972.62 506,-962.62 502.5,-972.62 509.5,-972.62"/>
-</g>
-<!-- GDSRCPT4 -->
-<g id="node18" class="node">
-<title>GDSRCPT4</title>
-<ellipse fill="none" stroke="#39f6c0" cx="506" cy="-818.6" rx="49.81" ry="49.81"/>
-<text text-anchor="middle" x="506" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT4</text>
-</g>
-<!-- GDSRCPT4&#45;&gt;Issue Goods Receipt -->
-<g id="edge31" class="edge">
-<title>GDSRCPT4&#45;&gt;Issue Goods Receipt</title>
-<path fill="none" stroke="#39f6c0" d="M506,-768.36C506,-757.52 506,-746.26 506,-736.14"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="509.5,-736.39 506,-726.39 502.5,-736.39 509.5,-736.39"/>
-</g>
-<!-- INVOICE1 -->
-<g id="node19" class="node">
-<title>INVOICE1</title>
-<ellipse fill="#e90638" stroke="#e90638" cx="652" cy="-582.38" rx="46.22" ry="46.22"/>
-<text text-anchor="middle" x="652" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">INVOICE1</text>
-</g>
-<!-- INVOICE1&#45;&gt;Receive Invoice -->
-<g id="edge9" class="edge">
-<title>INVOICE1&#45;&gt;Receive Invoice</title>
-<path fill="none" stroke="#e90638" d="M680.33,-545.33C700.13,-522.28 725.92,-492.25 745.18,-469.83"/>
-<path fill="none" stroke="white" d="M681.84,-546.63C701.65,-523.58 727.44,-493.56 746.7,-471.14"/>
-<path fill="none" stroke="#e90638" d="M683.36,-547.94C703.17,-524.88 728.96,-494.86 748.22,-472.44"/>
-<polygon fill="#e90638" stroke="#e90638" points="749.15,-473.66 753.01,-463.79 743.84,-469.1 749.15,-473.66"/>
-</g>
-<!-- INVOICE2 -->
-<g id="node20" class="node">
-<title>INVOICE2</title>
-<ellipse fill="none" stroke="#e90638" cx="793" cy="-294.34" rx="46.22" ry="46.22"/>
-<text text-anchor="middle" x="793" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">INVOICE2</text>
+<polygon fill="none" stroke="black" points="327,-200.23 121,-200.23 121,-152.23 327,-152.23 327,-200.23"/>
+<text text-anchor="middle" x="224" y="-167.43" font-family="Times New Roman,serif" font-size="36.00">Clear Invoice</text>
 </g>
 <!-- INVOICE2&#45;&gt;Clear Invoice -->
-<g id="edge21" class="edge">
+<g id="edge20" class="edge">
 <title>INVOICE2&#45;&gt;Clear Invoice</title>
-<path fill="none" stroke="#e90638" d="M760.31,-261.36C752.69,-253.47 744.44,-245.15 736.62,-237.67 726.87,-228.35 715.96,-218.5 705.85,-209.61"/>
-<path fill="none" stroke="white" d="M761.75,-259.97C754.11,-252.06 745.86,-243.74 738,-236.23 728.21,-226.87 717.3,-217.02 707.17,-208.11"/>
-<path fill="none" stroke="#e90638" d="M763.19,-258.58C755.53,-250.65 747.28,-242.34 739.38,-234.78 729.55,-225.38 718.64,-215.53 708.49,-206.61"/>
-<polygon fill="#e90638" stroke="#e90638" points="709.49,-205.49 699.65,-201.55 704.89,-210.77 709.49,-205.49"/>
-</g>
-<!-- MATERIAL2 -->
-<g id="node21" class="node">
-<title>MATERIAL2</title>
-<ellipse fill="none" stroke="#a13ccd" cx="628" cy="-818.6" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="628" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">MATERIAL2</text>
-</g>
-<!-- MATERIAL2&#45;&gt;Issue Goods Receipt -->
-<g id="edge14" class="edge">
-<title>MATERIAL2&#45;&gt;Issue Goods Receipt</title>
-<path fill="none" stroke="#a13ccd" d="M588.02,-782.31C571.76,-766.84 553.04,-749.02 537.46,-734.19"/>
-<path fill="none" stroke="white" d="M589.4,-780.87C573.14,-765.39 554.42,-747.57 538.84,-732.74"/>
-<path fill="none" stroke="#a13ccd" d="M590.78,-779.42C574.52,-763.94 555.8,-746.13 540.22,-731.3"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="541.29,-730.25 531.64,-725.89 536.47,-735.32 541.29,-730.25"/>
-</g>
-<!-- PURCHREQ3 -->
-<g id="node22" class="node">
-<title>PURCHREQ3</title>
-<ellipse fill="none" stroke="#05b202" cx="631" cy="-1291.06" rx="56.7" ry="56.7"/>
-<text text-anchor="middle" x="631" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ3</text>
-</g>
-<!-- PURCHREQ3&#45;&gt;Create Purchase Order -->
-<g id="edge11" class="edge">
-<title>PURCHREQ3&#45;&gt;Create Purchase Order</title>
-<path fill="none" stroke="#05b202" d="M631,-1234.04C631,-1225.42 631,-1216.73 631,-1208.75"/>
-<polygon fill="#05b202" stroke="#05b202" points="634.5,-1208.78 631,-1198.78 627.5,-1208.78 634.5,-1208.78"/>
-</g>
-<!-- MATERIAL9 -->
-<g id="node23" class="node">
-<title>MATERIAL9</title>
-<ellipse fill="none" stroke="#a13ccd" cx="502" cy="-1291.06" rx="53.89" ry="53.89"/>
-<text text-anchor="middle" x="502" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">MATERIAL9</text>
-</g>
-<!-- MATERIAL9&#45;&gt;Create Purchase Order -->
-<g id="edge27" class="edge">
-<title>MATERIAL9&#45;&gt;Create Purchase Order</title>
-<path fill="none" stroke="#a13ccd" d="M540.28,-1252.59C548.02,-1245.57 556.09,-1238.28 563.66,-1231.46 573.93,-1222.22 585.12,-1212.2 595.32,-1203.08"/>
-<path fill="none" stroke="white" d="M541.62,-1254.07C549.36,-1247.05 557.43,-1239.76 565,-1232.95 575.26,-1223.71 586.45,-1213.69 596.65,-1204.57"/>
-<path fill="none" stroke="#a13ccd" d="M542.96,-1255.55C550.7,-1248.54 558.77,-1241.25 566.34,-1234.43 576.6,-1225.2 587.79,-1215.18 597.98,-1206.06"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="598.69,-1207.44 603.82,-1198.17 594.03,-1202.22 598.69,-1207.44"/>
-</g>
-<!-- PURCHORD4 -->
-<g id="node24" class="node">
-<title>PURCHORD4</title>
-<ellipse fill="none" stroke="#ba0d39" cx="380" cy="-1054.83" rx="58.23" ry="58.23"/>
-<text text-anchor="middle" x="380" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">PURCHORD4</text>
-</g>
-<!-- PURCHORD4&#45;&gt;Receive Goods -->
-<g id="edge29" class="edge">
-<title>PURCHORD4&#45;&gt;Receive Goods</title>
-<path fill="none" stroke="#ba0d39" d="M422.66,-1014.52C438.92,-999.53 457.21,-982.68 472.51,-968.58"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="474.57,-971.44 479.55,-962.09 469.82,-966.3 474.57,-971.44"/>
+<path fill="none" stroke="#05b202" d="M131.81,-258.58C139.47,-250.65 147.72,-242.34 155.62,-234.78 165.45,-225.38 176.36,-215.53 186.51,-206.61"/>
+<path fill="none" stroke="white" d="M133.25,-259.97C140.89,-252.06 149.14,-243.74 157,-236.23 166.79,-226.87 177.7,-217.02 187.83,-208.11"/>
+<path fill="none" stroke="#05b202" d="M134.69,-261.36C142.31,-253.47 150.56,-245.15 158.38,-237.67 168.13,-228.35 179.04,-218.5 189.15,-209.61"/>
+<polygon fill="#05b202" stroke="#05b202" points="190.11,-210.77 195.35,-201.55 185.51,-205.49 190.11,-210.77"/>
 </g>
 <!-- GDSRCPT3 -->
-<g id="node25" class="node">
+<g id="node2" class="node">
 <title>GDSRCPT3</title>
-<ellipse fill="none" stroke="#39f6c0" cx="585" cy="-438.36" rx="49.81" ry="49.81"/>
-<text text-anchor="middle" x="585" y="-434.96" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT3</text>
+<ellipse fill="none" stroke="#39f6c0" cx="310" cy="-438.36" rx="49.81" ry="49.81"/>
+<text text-anchor="middle" x="310" y="-434.96" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT3</text>
 </g>
 <!-- GDSRCPT3&#45;&gt;Clear Invoice -->
-<g id="edge40" class="edge">
+<g id="edge16" class="edge">
 <title>GDSRCPT3&#45;&gt;Clear Invoice</title>
-<path fill="none" stroke="#39f6c0" d="M579.89,-388.68C577.61,-346.13 579.7,-283.88 604,-236.23 609.39,-225.66 617.54,-216.14 626.33,-207.98"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="628.46,-210.77 633.73,-201.58 623.88,-205.47 628.46,-210.77"/>
+<path fill="none" stroke="#39f6c0" d="M315.11,-388.68C317.39,-346.13 315.3,-283.88 291,-236.23 285.61,-225.66 277.46,-216.14 268.67,-207.98"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="271.12,-205.47 261.27,-201.58 266.54,-210.77 271.12,-205.47"/>
 </g>
-<!-- Issue Goods Receipt&#45;&gt;MATERIAL3 -->
-<g id="edge33" class="edge">
-<title>Issue Goods Receipt&#45;&gt;MATERIAL3</title>
-<path fill="none" stroke="#a13ccd" d="M485.03,-677.27C474.77,-664.86 461.78,-649.14 449.42,-634.19"/>
-<path fill="none" stroke="white" d="M486.57,-675.99C476.31,-663.58 463.32,-647.86 450.96,-632.91"/>
-<path fill="none" stroke="#a13ccd" d="M488.11,-674.72C477.86,-662.31 464.86,-646.59 452.5,-631.64"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="453.81,-630.88 444.74,-625.4 448.42,-635.34 453.81,-630.88"/>
+<!-- MATERIAL2 -->
+<g id="node3" class="node">
+<title>MATERIAL2</title>
+<ellipse fill="none" stroke="#ba0d39" cx="313" cy="-1054.83" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="313" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">MATERIAL2</text>
 </g>
-<!-- Issue Goods Receipt&#45;&gt;PURCHORD2 -->
-<g id="edge28" class="edge">
-<title>Issue Goods Receipt&#45;&gt;PURCHORD2</title>
-<path fill="none" stroke="#ba0d39" d="M616.49,-676.05C646.85,-667.24 679.09,-655.58 707,-640.49 712.6,-637.46 718.15,-633.91 723.52,-630.08"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="725.27,-633.14 731.15,-624.33 721.06,-627.55 725.27,-633.14"/>
+<!-- Receive Goods -->
+<g id="node26" class="node">
+<title>Receive Goods</title>
+<polygon fill="none" stroke="black" points="559,-960.72 327,-960.72 327,-912.72 559,-912.72 559,-960.72"/>
+<text text-anchor="middle" x="443" y="-927.92" font-family="Times New Roman,serif" font-size="36.00">Receive Goods</text>
 </g>
-<!-- Issue Goods Receipt&#45;&gt;MATERIAL5 -->
+<!-- MATERIAL2&#45;&gt;Receive Goods -->
+<g id="edge9" class="edge">
+<title>MATERIAL2&#45;&gt;Receive Goods</title>
+<path fill="none" stroke="#ba0d39" d="M351.24,-1016.31C358.99,-1009.3 367.07,-1002.02 374.67,-995.23 384.97,-986.02 396.21,-976.08 406.5,-967.03"/>
+<path fill="none" stroke="white" d="M352.58,-1017.79C360.33,-1010.78 368.4,-1003.51 376,-996.72 386.29,-987.52 397.53,-977.58 407.82,-968.53"/>
+<path fill="none" stroke="#ba0d39" d="M353.92,-1019.28C361.66,-1012.27 369.74,-1004.99 377.33,-998.21 387.62,-989.02 398.86,-979.08 409.14,-970.03"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="409.85,-971.4 415.05,-962.17 405.23,-966.15 409.85,-971.4"/>
+</g>
+<!-- MATERIAL3 -->
+<g id="node4" class="node">
+<title>MATERIAL3</title>
+<ellipse fill="#ba0d39" stroke="#ba0d39" cx="643" cy="-58.11" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="643" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">MATERIAL3</text>
+</g>
+<!-- MATERIAL9 -->
+<g id="node5" class="node">
+<title>MATERIAL9</title>
+<ellipse fill="none" stroke="#ba0d39" cx="741" cy="-294.34" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="741" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">MATERIAL9</text>
+</g>
+<!-- Goods Issue -->
+<g id="node30" class="node">
+<title>Goods Issue</title>
+<polygon fill="none" stroke="black" points="739,-200.23 547,-200.23 547,-152.23 739,-152.23 739,-200.23"/>
+<text text-anchor="middle" x="643" y="-167.43" font-family="Times New Roman,serif" font-size="36.00">Goods Issue</text>
+</g>
+<!-- MATERIAL9&#45;&gt;Goods Issue -->
+<g id="edge29" class="edge">
+<title>MATERIAL9&#45;&gt;Goods Issue</title>
+<path fill="none" stroke="#ba0d39" d="M704.92,-253.7C692.9,-239.45 679.6,-223.69 668.29,-210.3"/>
+<path fill="none" stroke="white" d="M706.45,-252.41C694.42,-238.16 681.12,-222.4 669.82,-209.01"/>
+<path fill="none" stroke="#ba0d39" d="M707.98,-251.12C695.95,-236.87 682.65,-221.11 671.35,-207.72"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="672.82,-207.13 663.69,-201.74 667.47,-211.64 672.82,-207.13"/>
+</g>
+<!-- GDSRCPT4 -->
+<g id="node6" class="node">
+<title>GDSRCPT4</title>
+<ellipse fill="#39f6c0" stroke="#39f6c0" cx="98" cy="-58.11" rx="49.81" ry="49.81"/>
+<text text-anchor="middle" x="98" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT4</text>
+</g>
+<!-- MATERIAL5 -->
+<g id="node7" class="node">
+<title>MATERIAL5</title>
+<ellipse fill="none" stroke="#ba0d39" cx="314" cy="-1291.06" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="314" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">MATERIAL5</text>
+</g>
+<!-- Create Purchase Order -->
+<g id="node32" class="node">
+<title>Create Purchase Order</title>
+<polygon fill="none" stroke="black" points="613.5,-1196.95 272.5,-1196.95 272.5,-1148.95 613.5,-1148.95 613.5,-1196.95"/>
+<text text-anchor="middle" x="443" y="-1164.15" font-family="Times New Roman,serif" font-size="36.00">Create Purchase Order</text>
+</g>
+<!-- MATERIAL5&#45;&gt;Create Purchase Order -->
+<g id="edge3" class="edge">
+<title>MATERIAL5&#45;&gt;Create Purchase Order</title>
+<path fill="none" stroke="#ba0d39" d="M352.28,-1252.59C360.02,-1245.57 368.09,-1238.28 375.66,-1231.46 385.93,-1222.22 397.12,-1212.2 407.32,-1203.08"/>
+<path fill="none" stroke="white" d="M353.62,-1254.07C361.36,-1247.05 369.43,-1239.76 377,-1232.95 387.26,-1223.71 398.45,-1213.69 408.65,-1204.57"/>
+<path fill="none" stroke="#ba0d39" d="M354.96,-1255.55C362.7,-1248.54 370.77,-1241.25 378.34,-1234.43 388.6,-1225.2 399.79,-1215.18 409.98,-1206.06"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="410.69,-1207.44 415.82,-1198.17 406.03,-1202.22 410.69,-1207.44"/>
+</g>
+<!-- MATERIAL6 -->
+<g id="node8" class="node">
+<title>MATERIAL6</title>
+<ellipse fill="none" stroke="#ba0d39" cx="496" cy="-582.38" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="496" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">MATERIAL6</text>
+</g>
+<!-- Plan Goods Issue -->
+<g id="node33" class="node">
+<title>Plan Goods Issue</title>
+<polygon fill="none" stroke="black" points="640.5,-462.36 377.5,-462.36 377.5,-414.36 640.5,-414.36 640.5,-462.36"/>
+<text text-anchor="middle" x="509" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Plan Goods Issue</text>
+</g>
+<!-- MATERIAL6&#45;&gt;Plan Goods Issue -->
+<g id="edge26" class="edge">
+<title>MATERIAL6&#45;&gt;Plan Goods Issue</title>
+<path fill="none" stroke="#ba0d39" d="M498.85,-528.31C500.52,-510.04 502.35,-490.04 503.85,-473.63"/>
+<path fill="none" stroke="white" d="M500.84,-528.49C502.51,-510.22 504.34,-490.22 505.85,-473.81"/>
+<path fill="none" stroke="#ba0d39" d="M502.83,-528.68C504.51,-510.4 506.34,-490.41 507.84,-474"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="509.31,-474.36 506.74,-464.08 502.34,-473.72 509.31,-474.36"/>
+</g>
+<!-- PURCHREQ2 -->
+<g id="node9" class="node">
+<title>PURCHREQ2</title>
+<ellipse fill="none" stroke="#e90638" cx="443" cy="-1291.06" rx="56.7" ry="56.7"/>
+<text text-anchor="middle" x="443" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ2</text>
+</g>
+<!-- PURCHREQ2&#45;&gt;Create Purchase Order -->
+<g id="edge11" class="edge">
+<title>PURCHREQ2&#45;&gt;Create Purchase Order</title>
+<path fill="none" stroke="#e90638" d="M443,-1234.04C443,-1225.42 443,-1216.73 443,-1208.75"/>
+<polygon fill="#e90638" stroke="#e90638" points="446.5,-1208.78 443,-1198.78 439.5,-1208.78 446.5,-1208.78"/>
+</g>
+<!-- PURCHORD1 -->
+<g id="node10" class="node">
+<title>PURCHORD1</title>
+<ellipse fill="#a13ccd" stroke="#a13ccd" cx="576" cy="-1291.06" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="576" y="-1287.66" font-family="Times New Roman,serif" font-size="13.00">PURCHORD1</text>
+</g>
+<!-- PURCHORD1&#45;&gt;Create Purchase Order -->
+<g id="edge12" class="edge">
+<title>PURCHORD1&#45;&gt;Create Purchase Order</title>
+<path fill="none" stroke="#a13ccd" d="M532.45,-1252.04C514.77,-1236.61 494.63,-1219.02 477.94,-1204.45"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="480.54,-1202.07 470.7,-1198.13 475.93,-1207.34 480.54,-1202.07"/>
+</g>
+<!-- PURCHORD4 -->
+<g id="node11" class="node">
+<title>PURCHORD4</title>
+<ellipse fill="none" stroke="#a13ccd" cx="443" cy="-1054.83" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="443" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">PURCHORD4</text>
+</g>
+<!-- PURCHORD4&#45;&gt;Receive Goods -->
+<g id="edge18" class="edge">
+<title>PURCHORD4&#45;&gt;Receive Goods</title>
+<path fill="none" stroke="#a13ccd" d="M443,-996.12C443,-988.07 443,-980.02 443,-972.57"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="446.5,-972.61 443,-962.61 439.5,-972.61 446.5,-972.61"/>
+</g>
+<!-- GDSRCPT2 -->
+<g id="node12" class="node">
+<title>GDSRCPT2</title>
+<ellipse fill="none" stroke="#39f6c0" cx="321" cy="-818.6" rx="49.81" ry="49.81"/>
+<text text-anchor="middle" x="321" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT2</text>
+</g>
+<!-- Issue Goods Receipt -->
+<g id="node27" class="node">
+<title>Issue Goods Receipt</title>
+<polygon fill="none" stroke="black" points="597.5,-724.49 288.5,-724.49 288.5,-676.49 597.5,-676.49 597.5,-724.49"/>
+<text text-anchor="middle" x="443" y="-691.69" font-family="Times New Roman,serif" font-size="36.00">Issue Goods Receipt</text>
+</g>
+<!-- GDSRCPT2&#45;&gt;Issue Goods Receipt -->
+<g id="edge8" class="edge">
+<title>GDSRCPT2&#45;&gt;Issue Goods Receipt</title>
+<path fill="none" stroke="#39f6c0" d="M356.48,-783.08C364.21,-775.61 372.36,-767.76 380,-760.49 389.57,-751.38 400.02,-741.55 409.61,-732.57"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="411.75,-735.36 416.67,-725.97 406.97,-730.24 411.75,-735.36"/>
+</g>
+<!-- PURCHORD6 -->
+<g id="node13" class="node">
+<title>PURCHORD6</title>
+<ellipse fill="none" stroke="#a13ccd" cx="224" cy="-294.34" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="224" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">PURCHORD6</text>
+</g>
+<!-- PURCHORD6&#45;&gt;Clear Invoice -->
 <g id="edge15" class="edge">
-<title>Issue Goods Receipt&#45;&gt;MATERIAL5</title>
-<path fill="none" stroke="#a13ccd" d="M440.05,-677.99C411.18,-667.43 376.92,-654.61 346.26,-642.35 322.15,-632.7 295.88,-621.56 273.08,-611.68"/>
-<path fill="none" stroke="white" d="M440.73,-676.11C411.88,-665.56 377.62,-652.74 347,-640.49 322.93,-630.86 296.66,-619.72 273.87,-609.85"/>
-<path fill="none" stroke="#a13ccd" d="M441.42,-674.23C412.58,-663.69 378.32,-650.86 347.74,-638.63 323.71,-629.02 297.44,-617.88 274.67,-608.01"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="275.29,-606.64 264.72,-605.87 272.5,-613.06 275.29,-606.64"/>
+<title>PURCHORD6&#45;&gt;Clear Invoice</title>
+<path fill="none" stroke="#a13ccd" d="M224,-235.63C224,-227.58 224,-219.53 224,-212.08"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="227.5,-212.12 224,-202.12 220.5,-212.12 227.5,-212.12"/>
+</g>
+<!-- MATERIAL1 -->
+<g id="node14" class="node">
+<title>MATERIAL1</title>
+<ellipse fill="none" stroke="#ba0d39" cx="443" cy="-818.6" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="443" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">MATERIAL1</text>
+</g>
+<!-- MATERIAL1&#45;&gt;Issue Goods Receipt -->
+<g id="edge2" class="edge">
+<title>MATERIAL1&#45;&gt;Issue Goods Receipt</title>
+<path fill="none" stroke="#ba0d39" d="M441,-764.3C441,-754.8 441,-745.12 441,-736.29"/>
+<path fill="none" stroke="white" d="M443,-764.3C443,-754.8 443,-745.12 443,-736.29"/>
+<path fill="none" stroke="#ba0d39" d="M445,-764.3C445,-754.8 445,-745.12 445,-736.29"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="446.5,-736.4 443,-726.41 439.5,-736.41 446.5,-736.4"/>
+</g>
+<!-- MATERIAL4 -->
+<g id="node15" class="node">
+<title>MATERIAL4</title>
+<ellipse fill="#ba0d39" stroke="#ba0d39" cx="314" cy="-1526.03" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="314" y="-1522.63" font-family="Times New Roman,serif" font-size="13.00">MATERIAL4</text>
+</g>
+<!-- Create Purchase Requisition -->
+<g id="node31" class="node">
+<title>Create Purchase Requisition</title>
+<polygon fill="none" stroke="black" points="587,-1433.18 169,-1433.18 169,-1385.18 587,-1385.18 587,-1433.18"/>
+<text text-anchor="middle" x="378" y="-1400.38" font-family="Times New Roman,serif" font-size="36.00">Create Purchase Requisition</text>
+</g>
+<!-- MATERIAL4&#45;&gt;Create Purchase Requisition -->
+<g id="edge7" class="edge">
+<title>MATERIAL4&#45;&gt;Create Purchase Requisition</title>
+<path fill="none" stroke="#ba0d39" d="M338.28,-1477.34C344.79,-1465.67 351.63,-1453.38 357.69,-1442.51"/>
+<path fill="none" stroke="white" d="M340.03,-1478.31C346.54,-1466.64 353.38,-1454.36 359.44,-1443.48"/>
+<path fill="none" stroke="#ba0d39" d="M341.78,-1479.29C348.28,-1467.61 355.13,-1455.33 361.19,-1444.46"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="362.42,-1445.32 364.23,-1434.88 356.31,-1441.91 362.42,-1445.32"/>
+</g>
+<!-- MATERIAL8 -->
+<g id="node16" class="node">
+<title>MATERIAL8</title>
+<ellipse fill="none" stroke="#ba0d39" cx="699" cy="-582.38" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="699" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">MATERIAL8</text>
+</g>
+<!-- Verify Material -->
+<g id="node34" class="node">
+<title>Verify Material</title>
+<polygon fill="none" stroke="black" points="895,-462.36 659,-462.36 659,-414.36 895,-414.36 895,-462.36"/>
+<text text-anchor="middle" x="777" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Verify Material</text>
+</g>
+<!-- MATERIAL8&#45;&gt;Verify Material -->
+<g id="edge10" class="edge">
+<title>MATERIAL8&#45;&gt;Verify Material</title>
+<path fill="none" stroke="#ba0d39" d="M723,-533.52C734.11,-513.3 746.84,-490.12 756.95,-471.7"/>
+<path fill="none" stroke="white" d="M724.76,-534.48C735.86,-514.26 748.59,-491.08 758.71,-472.66"/>
+<path fill="none" stroke="#ba0d39" d="M726.51,-535.44C737.62,-515.22 750.35,-492.04 760.46,-473.63"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="761.7,-474.48 763.45,-464.03 755.57,-471.11 761.7,-474.48"/>
+</g>
+<!-- INVOICE1 -->
+<g id="node17" class="node">
+<title>INVOICE1</title>
+<ellipse fill="#05b202" stroke="#05b202" cx="121" cy="-582.38" rx="46.22" ry="46.22"/>
+<text text-anchor="middle" x="121" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">INVOICE1</text>
+</g>
+<!-- Receive Invoice -->
+<g id="node29" class="node">
+<title>Receive Invoice</title>
+<polygon fill="none" stroke="black" points="242,-462.36 0,-462.36 0,-414.36 242,-414.36 242,-462.36"/>
+<text text-anchor="middle" x="121" y="-429.56" font-family="Times New Roman,serif" font-size="36.00">Receive Invoice</text>
+</g>
+<!-- INVOICE1&#45;&gt;Receive Invoice -->
+<g id="edge32" class="edge">
+<title>INVOICE1&#45;&gt;Receive Invoice</title>
+<path fill="none" stroke="#05b202" d="M119,-535.66C119,-515.7 119,-492.68 119,-474.16"/>
+<path fill="none" stroke="white" d="M121,-535.66C121,-515.7 121,-492.68 121,-474.16"/>
+<path fill="none" stroke="#05b202" d="M123,-535.66C123,-515.7 123,-492.68 123,-474.16"/>
+<polygon fill="#05b202" stroke="#05b202" points="124.5,-474.22 121,-464.22 117.5,-474.22 124.5,-474.22"/>
+</g>
+<!-- PURCHREQ1 -->
+<g id="node18" class="node">
+<title>PURCHREQ1</title>
+<ellipse fill="#e90638" stroke="#e90638" cx="443" cy="-1526.03" rx="56.7" ry="56.7"/>
+<text text-anchor="middle" x="443" y="-1522.63" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ1</text>
+</g>
+<!-- PURCHREQ1&#45;&gt;Create Purchase Requisition -->
+<g id="edge34" class="edge">
+<title>PURCHREQ1&#45;&gt;Create Purchase Requisition</title>
+<path fill="none" stroke="#e90638" d="M415.43,-1476.32C409.15,-1465.22 402.62,-1453.68 396.81,-1443.41"/>
+<polygon fill="#e90638" stroke="#e90638" points="399.98,-1441.91 392.01,-1434.93 393.89,-1445.36 399.98,-1441.91"/>
+</g>
+<!-- PURCHREQ3 -->
+<g id="node19" class="node">
+<title>PURCHREQ3</title>
+<ellipse fill="#e90638" stroke="#e90638" cx="576" cy="-1054.83" rx="56.7" ry="56.7"/>
+<text text-anchor="middle" x="576" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">PURCHREQ3</text>
+</g>
+<!-- PURCHORD5 -->
+<g id="node20" class="node">
+<title>PURCHORD5</title>
+<ellipse fill="none" stroke="#a13ccd" cx="292" cy="-582.38" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="292" y="-578.98" font-family="Times New Roman,serif" font-size="13.00">PURCHORD5</text>
+</g>
+<!-- PURCHORD5&#45;&gt;Receive Invoice -->
+<g id="edge19" class="edge">
+<title>PURCHORD5&#45;&gt;Receive Invoice</title>
+<path fill="none" stroke="#a13ccd" d="M247.52,-544.43C219.6,-521.25 184.04,-491.71 157.73,-469.86"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="160.28,-467.43 150.35,-463.74 155.81,-472.82 160.28,-467.43"/>
+</g>
+<!-- MATERIAL7 -->
+<g id="node21" class="node">
+<title>MATERIAL7</title>
+<ellipse fill="none" stroke="#ba0d39" cx="545" cy="-294.34" rx="53.89" ry="53.89"/>
+<text text-anchor="middle" x="545" y="-290.94" font-family="Times New Roman,serif" font-size="13.00">MATERIAL7</text>
+</g>
+<!-- MATERIAL7&#45;&gt;Goods Issue -->
+<g id="edge33" class="edge">
+<title>MATERIAL7&#45;&gt;Goods Issue</title>
+<path fill="none" stroke="#ba0d39" d="M578.02,-251.12C590.05,-236.87 603.35,-221.11 614.65,-207.72"/>
+<path fill="none" stroke="white" d="M579.55,-252.41C591.58,-238.16 604.88,-222.4 616.18,-209.01"/>
+<path fill="none" stroke="#ba0d39" d="M581.08,-253.7C593.1,-239.45 606.4,-223.69 617.71,-210.3"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="618.53,-211.64 622.31,-201.74 613.18,-207.13 618.53,-211.64"/>
+</g>
+<!-- PURCHORD2 -->
+<g id="node22" class="node">
+<title>PURCHORD2</title>
+<ellipse fill="none" stroke="#a13ccd" cx="573" cy="-818.6" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="573" y="-815.2" font-family="Times New Roman,serif" font-size="13.00">PURCHORD2</text>
+</g>
+<!-- PURCHORD2&#45;&gt;Issue Goods Receipt -->
+<g id="edge37" class="edge">
+<title>PURCHORD2&#45;&gt;Issue Goods Receipt</title>
+<path fill="none" stroke="#a13ccd" d="M529.71,-778.94C512.76,-763.8 493.58,-746.67 477.58,-732.38"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="479.97,-729.82 470.18,-725.77 475.31,-735.04 479.97,-729.82"/>
+</g>
+<!-- PURCHORD3 -->
+<g id="node23" class="node">
+<title>PURCHORD3</title>
+<ellipse fill="#a13ccd" stroke="#a13ccd" cx="224" cy="-58.11" rx="58.23" ry="58.23"/>
+<text text-anchor="middle" x="224" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">PURCHORD3</text>
+</g>
+<!-- GDSRCPT1 -->
+<g id="node24" class="node">
+<title>GDSRCPT1</title>
+<ellipse fill="#39f6c0" stroke="#39f6c0" cx="701" cy="-1054.83" rx="49.81" ry="49.81"/>
+<text text-anchor="middle" x="701" y="-1051.43" font-family="Times New Roman,serif" font-size="13.00">GDSRCPT1</text>
+</g>
+<!-- GDSRCPT1&#45;&gt;Receive Goods -->
+<g id="edge5" class="edge">
+<title>GDSRCPT1&#45;&gt;Receive Goods</title>
+<path fill="none" stroke="#39f6c0" d="M668.39,-1016.94C660.36,-1009.44 651.36,-1002.18 642,-996.72 619.13,-983.36 592.99,-972.81 567.34,-964.55"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="568.42,-961.22 557.83,-961.6 566.35,-967.91 568.42,-961.22"/>
+</g>
+<!-- INVOICE3 -->
+<g id="node25" class="node">
+<title>INVOICE3</title>
+<ellipse fill="#05b202" stroke="#05b202" cx="346" cy="-58.11" rx="46.22" ry="46.22"/>
+<text text-anchor="middle" x="346" y="-54.71" font-family="Times New Roman,serif" font-size="13.00">INVOICE3</text>
+</g>
+<!-- Receive Goods&#45;&gt;GDSRCPT2 -->
+<g id="edge39" class="edge">
+<title>Receive Goods&#45;&gt;GDSRCPT2</title>
+<path fill="none" stroke="#39f6c0" d="M417.77,-912.27C406.22,-901.49 392.37,-888.5 380,-876.72 374.99,-871.94 369.75,-866.93 364.56,-861.93"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="367.19,-859.6 357.56,-855.18 362.33,-864.64 367.19,-859.6"/>
+</g>
+<!-- Receive Goods&#45;&gt;MATERIAL1 -->
+<g id="edge21" class="edge">
+<title>Receive Goods&#45;&gt;MATERIAL1</title>
+<path fill="none" stroke="#ba0d39" d="M441,-912.22C441,-903.94 441,-894.18 441,-884.17"/>
+<path fill="none" stroke="white" d="M443,-912.22C443,-903.94 443,-894.18 443,-884.17"/>
+<path fill="none" stroke="#ba0d39" d="M445,-912.22C445,-903.94 445,-894.18 445,-884.17"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="446.5,-884.32 443,-874.32 439.5,-884.32 446.5,-884.32"/>
+</g>
+<!-- Receive Goods&#45;&gt;PURCHORD2 -->
+<g id="edge36" class="edge">
+<title>Receive Goods&#45;&gt;PURCHORD2</title>
+<path fill="none" stroke="#a13ccd" d="M469.31,-912.22C484.36,-898.77 503.77,-881.44 521.72,-865.41"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="523.59,-868.43 528.71,-859.16 518.92,-863.21 523.59,-868.43"/>
 </g>
 <!-- Issue Goods Receipt&#45;&gt;GDSRCPT3 -->
-<g id="edge39" class="edge">
+<g id="edge31" class="edge">
 <title>Issue Goods Receipt&#45;&gt;GDSRCPT3</title>
-<path fill="none" stroke="#39f6c0" d="M513.01,-676.41C525.12,-636.54 550.29,-553.64 567.42,-497.25"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="570.74,-498.37 570.29,-487.79 564.04,-496.34 570.74,-498.37"/>
+<path fill="none" stroke="#39f6c0" d="M432.55,-676.25C417.18,-642.43 387.24,-577.83 359,-524.26 353.35,-513.54 347.05,-502.22 340.9,-491.45"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="344.1,-489.99 336.08,-483.07 338.03,-493.48 344.1,-489.99"/>
 </g>
-<!-- Receive Goods&#45;&gt;PURCHORD3 -->
-<g id="edge16" class="edge">
-<title>Receive Goods&#45;&gt;PURCHORD3</title>
-<path fill="none" stroke="#ba0d39" d="M480.5,-912.22C466.23,-899.07 447.91,-882.19 430.84,-866.45"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="433.42,-864.07 423.69,-859.87 428.67,-869.22 433.42,-864.07"/>
+<!-- Issue Goods Receipt&#45;&gt;MATERIAL6 -->
+<g id="edge22" class="edge">
+<title>Issue Goods Receipt&#45;&gt;MATERIAL6</title>
+<path fill="none" stroke="#ba0d39" d="M451.91,-675.16C456.44,-665.22 461.95,-653.16 467.47,-641.06"/>
+<path fill="none" stroke="white" d="M453.73,-675.99C458.26,-666.05 463.77,-653.99 469.29,-641.9"/>
+<path fill="none" stroke="#ba0d39" d="M455.54,-676.82C460.08,-666.88 465.59,-654.82 471.11,-642.73"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="472.31,-643.71 473.28,-633.15 465.94,-640.8 472.31,-643.71"/>
 </g>
-<!-- Receive Goods&#45;&gt;GDSRCPT4 -->
-<g id="edge19" class="edge">
-<title>Receive Goods&#45;&gt;GDSRCPT4</title>
-<path fill="none" stroke="#39f6c0" d="M506,-912.22C506,-902.78 506,-891.42 506,-879.94"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="509.5,-880 506,-870 502.5,-880 509.5,-880"/>
-</g>
-<!-- Receive Goods&#45;&gt;MATERIAL2 -->
-<g id="edge32" class="edge">
-<title>Receive Goods&#45;&gt;MATERIAL2</title>
-<path fill="none" stroke="#a13ccd" d="M529.31,-910.77C543.79,-896.99 562.56,-879.12 579.75,-862.77"/>
-<path fill="none" stroke="white" d="M530.69,-912.22C545.17,-898.44 563.94,-880.57 581.13,-864.21"/>
-<path fill="none" stroke="#a13ccd" d="M532.07,-913.67C546.55,-899.89 565.32,-882.02 582.51,-865.66"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="583.49,-866.8 588.32,-857.37 578.66,-861.73 583.49,-866.8"/>
-</g>
-<!-- Create Purchase Requisition&#45;&gt;PURCHREQ3 -->
-<g id="edge23" class="edge">
-<title>Create Purchase Requisition&#45;&gt;PURCHREQ3</title>
-<path fill="none" stroke="#05b202" d="M579.15,-1384.68C584.66,-1374.84 591.33,-1362.92 598.03,-1350.96"/>
-<polygon fill="#05b202" stroke="#05b202" points="601.07,-1352.7 602.9,-1342.26 594.96,-1349.28 601.07,-1352.7"/>
-</g>
-<!-- Create Purchase Requisition&#45;&gt;MATERIAL9 -->
-<g id="edge4" class="edge">
-<title>Create Purchase Requisition&#45;&gt;MATERIAL9</title>
-<path fill="none" stroke="#a13ccd" d="M551.3,-1385.64C545.48,-1375.08 538.33,-1362.12 531.25,-1349.28"/>
-<path fill="none" stroke="white" d="M553.05,-1384.68C547.23,-1374.12 540.08,-1361.16 533.01,-1348.31"/>
-<path fill="none" stroke="#a13ccd" d="M554.8,-1383.71C548.98,-1373.15 541.84,-1360.19 534.76,-1347.35"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="536.25,-1346.95 528.36,-1339.88 530.12,-1350.33 536.25,-1346.95"/>
-</g>
-<!-- Create Purchase Order&#45;&gt;PURCHREQ2 -->
-<g id="edge1" class="edge">
-<title>Create Purchase Order&#45;&gt;PURCHREQ2</title>
-<path fill="none" stroke="#05b202" d="M631,-1148.45C631,-1140.99 631,-1132.34 631,-1123.38"/>
-<polygon fill="#05b202" stroke="#05b202" points="634.5,-1123.45 631,-1113.45 627.5,-1123.45 634.5,-1123.45"/>
-</g>
-<!-- Create Purchase Order&#45;&gt;MATERIAL1 -->
-<g id="edge12" class="edge">
-<title>Create Purchase Order&#45;&gt;MATERIAL1</title>
-<path fill="none" stroke="#a13ccd" d="M655.72,-1147.24C667.88,-1136.39 682.53,-1123.28 695.66,-1111.46 700.51,-1107.1 705.56,-1102.53 710.6,-1097.98"/>
-<path fill="none" stroke="white" d="M657.06,-1148.73C669.21,-1137.88 683.86,-1124.77 697,-1112.95 701.85,-1108.58 706.9,-1104.02 711.95,-1099.46"/>
-<path fill="none" stroke="#a13ccd" d="M658.39,-1150.22C670.54,-1139.37 685.2,-1126.26 698.34,-1114.43 703.19,-1110.07 708.24,-1105.5 713.29,-1100.94"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="714.19,-1102.15 719.26,-1092.84 709.5,-1096.96 714.19,-1102.15"/>
-</g>
-<!-- Create Purchase Order&#45;&gt;PURCHORD4 -->
-<g id="edge6" class="edge">
-<title>Create Purchase Order&#45;&gt;PURCHORD4</title>
-<path fill="none" stroke="#ba0d39" d="M533.46,-1148.52C504.63,-1139.55 473.67,-1127.8 447,-1112.95 441.44,-1109.85 435.92,-1106.25 430.56,-1102.39"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="433.03,-1099.87 422.95,-1096.61 428.8,-1105.45 433.03,-1099.87"/>
-</g>
-<!-- Plan Goods Issue&#45;&gt;MATERIAL4 -->
-<g id="edge34" class="edge">
-<title>Plan Goods Issue&#45;&gt;MATERIAL4</title>
-<path fill="none" stroke="#a13ccd" d="M372.49,-414.8C364.23,-398.28 352.79,-375.41 342.17,-354.15"/>
-<path fill="none" stroke="white" d="M374.28,-413.91C366.02,-397.39 354.58,-374.51 343.95,-353.26"/>
-<path fill="none" stroke="#a13ccd" d="M376.06,-413.01C367.81,-396.49 356.37,-373.62 345.74,-352.36"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="347.1,-351.72 339.5,-344.34 340.84,-354.85 347.1,-351.72"/>
-</g>
-<!-- Goods Issue&#45;&gt;MATERIAL8 -->
-<g id="edge36" class="edge">
-<title>Goods Issue&#45;&gt;MATERIAL8</title>
-<path fill="none" stroke="#a13ccd" d="M233,-151.73C233,-143.45 233,-133.69 233,-123.68"/>
-<path fill="none" stroke="white" d="M235,-151.73C235,-143.45 235,-133.69 235,-123.68"/>
-<path fill="none" stroke="#a13ccd" d="M237,-151.73C237,-143.45 237,-133.69 237,-123.68"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="238.5,-123.83 235,-113.83 231.5,-123.83 238.5,-123.83"/>
-</g>
-<!-- Verify Material&#45;&gt;MATERIAL6 -->
-<g id="edge25" class="edge">
-<title>Verify Material&#45;&gt;MATERIAL6</title>
-<path fill="none" stroke="#a13ccd" d="M122.01,-413.42C125.9,-398.06 131.18,-377.22 136.24,-357.28"/>
-<path fill="none" stroke="white" d="M123.94,-413.91C127.84,-398.55 133.12,-377.71 138.17,-357.77"/>
-<path fill="none" stroke="#a13ccd" d="M125.88,-414.4C129.78,-399.04 135.06,-378.2 140.11,-358.27"/>
-<polygon fill="#a13ccd" stroke="#a13ccd" points="141.51,-358.86 140.57,-348.3 134.72,-357.14 141.51,-358.86"/>
-</g>
-<!-- Receive Invoice&#45;&gt;PURCHORD6 -->
+<!-- Issue Goods Receipt&#45;&gt;MATERIAL8 -->
 <g id="edge17" class="edge">
-<title>Receive Invoice&#45;&gt;PURCHORD6</title>
-<path fill="none" stroke="#ba0d39" d="M756.99,-413.91C744.64,-396.88 727.4,-373.1 711.59,-351.31"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="714.51,-349.38 705.81,-343.34 708.85,-353.49 714.51,-349.38"/>
+<title>Issue Goods Receipt&#45;&gt;MATERIAL8</title>
+<path fill="none" stroke="#ba0d39" d="M493.98,-674.17C535.91,-655.15 594.99,-628.36 638.82,-608.48"/>
+<path fill="none" stroke="white" d="M494.81,-675.99C536.74,-656.97 595.82,-630.18 639.65,-610.3"/>
+<path fill="none" stroke="#ba0d39" d="M495.63,-677.81C537.56,-658.8 596.64,-632 640.47,-612.12"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="640.84,-613.6 648.5,-606.28 637.95,-607.22 640.84,-613.6"/>
 </g>
-<!-- Receive Invoice&#45;&gt;INVOICE2 -->
-<g id="edge20" class="edge">
-<title>Receive Invoice&#45;&gt;INVOICE2</title>
-<path fill="none" stroke="#e90638" d="M775.16,-413.64C777.42,-396.74 780.57,-373.17 783.47,-351.5"/>
-<path fill="none" stroke="white" d="M777.14,-413.91C779.4,-397 782.55,-373.44 785.45,-351.77"/>
-<path fill="none" stroke="#e90638" d="M779.12,-414.17C781.38,-397.27 784.53,-373.7 787.43,-352.03"/>
-<polygon fill="#e90638" stroke="#e90638" points="788.88,-352.53 786.74,-342.16 781.94,-351.6 788.88,-352.53"/>
-</g>
-<!-- Clear Invoice&#45;&gt;PURCHORD5 -->
-<g id="edge7" class="edge">
-<title>Clear Invoice&#45;&gt;PURCHORD5</title>
-<path fill="none" stroke="#ba0d39" d="M695.69,-151.73C709.33,-138.75 726.78,-122.14 743.13,-106.58"/>
-<polygon fill="#ba0d39" stroke="#ba0d39" points="745.12,-109.52 749.95,-100.09 740.29,-104.45 745.12,-109.52"/>
-</g>
-<!-- Clear Invoice&#45;&gt;GDSRCPT2 -->
+<!-- Issue Goods Receipt&#45;&gt;PURCHORD5 -->
 <g id="edge30" class="edge">
-<title>Clear Invoice&#45;&gt;GDSRCPT2</title>
-<path fill="none" stroke="#39f6c0" d="M647.93,-151.73C634.06,-137.61 615.99,-119.19 599.61,-102.51"/>
-<polygon fill="#39f6c0" stroke="#39f6c0" points="602.29,-100.25 592.79,-95.56 597.29,-105.15 602.29,-100.25"/>
+<title>Issue Goods Receipt&#45;&gt;PURCHORD5</title>
+<path fill="none" stroke="#a13ccd" d="M412.44,-675.99C393.66,-661.55 369.04,-642.62 346.96,-625.64"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="349.26,-622.99 339.2,-619.67 344.99,-628.54 349.26,-622.99"/>
+</g>
+<!-- Clear Invoice&#45;&gt;GDSRCPT4 -->
+<g id="edge25" class="edge">
+<title>Clear Invoice&#45;&gt;GDSRCPT4</title>
+<path fill="none" stroke="#39f6c0" d="M197.01,-151.97C184.69,-141.23 169.98,-128.21 157,-116.23 151.91,-111.53 146.63,-106.56 141.42,-101.59"/>
+<polygon fill="#39f6c0" stroke="#39f6c0" points="144.04,-99.26 134.4,-94.87 139.2,-104.31 144.04,-99.26"/>
+</g>
+<!-- Clear Invoice&#45;&gt;PURCHORD3 -->
+<g id="edge38" class="edge">
+<title>Clear Invoice&#45;&gt;PURCHORD3</title>
+<path fill="none" stroke="#a13ccd" d="M224,-151.73C224,-144.64 224,-136.46 224,-127.96"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="227.5,-128.18 224,-118.18 220.5,-128.18 227.5,-128.18"/>
 </g>
 <!-- Clear Invoice&#45;&gt;INVOICE3 -->
-<g id="edge10" class="edge">
+<g id="edge6" class="edge">
 <title>Clear Invoice&#45;&gt;INVOICE3</title>
-<path fill="none" stroke="#e90638" d="M669,-151.73C669,-141.38 669,-128.73 669,-116.14"/>
-<path fill="none" stroke="white" d="M671,-151.73C671,-141.38 671,-128.73 671,-116.14"/>
-<path fill="none" stroke="#e90638" d="M673,-151.73C673,-141.38 673,-128.73 673,-116.14"/>
-<polygon fill="#e90638" stroke="#e90638" points="674.5,-116.18 671,-106.18 667.5,-116.18 674.5,-116.18"/>
+<path fill="none" stroke="#05b202" d="M250.2,-150.39C262.48,-139.75 277.01,-126.84 289.62,-114.78 294.87,-109.76 300.33,-104.35 305.64,-98.96"/>
+<path fill="none" stroke="white" d="M251.51,-151.9C263.81,-141.25 278.34,-128.33 291,-116.23 296.28,-111.18 301.74,-105.77 307.07,-100.36"/>
+<path fill="none" stroke="#05b202" d="M252.82,-153.41C265.13,-142.74 279.67,-129.83 292.38,-117.67 297.69,-112.6 303.14,-107.19 308.49,-101.77"/>
+<polygon fill="#05b202" stroke="#05b202" points="309.21,-103.17 313.69,-93.57 304.2,-98.28 309.21,-103.17"/>
+</g>
+<!-- Receive Invoice&#45;&gt;INVOICE2 -->
+<g id="edge40" class="edge">
+<title>Receive Invoice&#45;&gt;INVOICE2</title>
+<path fill="none" stroke="#05b202" d="M115.88,-414.17C113.62,-397.27 110.47,-373.7 107.57,-352.03"/>
+<path fill="none" stroke="white" d="M117.86,-413.91C115.6,-397 112.45,-373.44 109.55,-351.77"/>
+<path fill="none" stroke="#05b202" d="M119.84,-413.64C117.58,-396.74 114.43,-373.17 111.53,-351.5"/>
+<polygon fill="#05b202" stroke="#05b202" points="113.06,-351.6 108.26,-342.16 106.12,-352.53 113.06,-351.6"/>
+</g>
+<!-- Receive Invoice&#45;&gt;PURCHORD6 -->
+<g id="edge14" class="edge">
+<title>Receive Invoice&#45;&gt;PURCHORD6</title>
+<path fill="none" stroke="#a13ccd" d="M138.01,-413.91C150.36,-396.88 167.6,-373.1 183.41,-351.31"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="186.15,-353.49 189.19,-343.34 180.49,-349.38 186.15,-353.49"/>
+</g>
+<!-- Goods Issue&#45;&gt;MATERIAL3 -->
+<g id="edge23" class="edge">
+<title>Goods Issue&#45;&gt;MATERIAL3</title>
+<path fill="none" stroke="#ba0d39" d="M641,-151.73C641,-143.45 641,-133.69 641,-123.68"/>
+<path fill="none" stroke="white" d="M643,-151.73C643,-143.45 643,-133.69 643,-123.68"/>
+<path fill="none" stroke="#ba0d39" d="M645,-151.73C645,-143.45 645,-133.69 645,-123.68"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="646.5,-123.83 643,-113.83 639.5,-123.83 646.5,-123.83"/>
+</g>
+<!-- Create Purchase Requisition&#45;&gt;MATERIAL5 -->
+<g id="edge24" class="edge">
+<title>Create Purchase Requisition&#45;&gt;MATERIAL5</title>
+<path fill="none" stroke="#ba0d39" d="M363.3,-1385.64C357.48,-1375.08 350.33,-1362.12 343.25,-1349.28"/>
+<path fill="none" stroke="white" d="M365.05,-1384.68C359.23,-1374.12 352.08,-1361.16 345.01,-1348.31"/>
+<path fill="none" stroke="#ba0d39" d="M366.8,-1383.71C360.98,-1373.15 353.84,-1360.19 346.76,-1347.35"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="348.25,-1346.95 340.36,-1339.88 342.12,-1350.33 348.25,-1346.95"/>
+</g>
+<!-- Create Purchase Requisition&#45;&gt;PURCHREQ2 -->
+<g id="edge28" class="edge">
+<title>Create Purchase Requisition&#45;&gt;PURCHREQ2</title>
+<path fill="none" stroke="#e90638" d="M391.15,-1384.68C396.66,-1374.84 403.33,-1362.92 410.03,-1350.96"/>
+<polygon fill="#e90638" stroke="#e90638" points="413.07,-1352.7 414.9,-1342.26 406.96,-1349.28 413.07,-1352.7"/>
+</g>
+<!-- Create Purchase Order&#45;&gt;MATERIAL2 -->
+<g id="edge1" class="edge">
+<title>Create Purchase Order&#45;&gt;MATERIAL2</title>
+<path fill="none" stroke="#ba0d39" d="M414.87,-1150C402.58,-1139.21 387.85,-1126.22 374.67,-1114.44 369.8,-1110.09 364.73,-1105.54 359.68,-1100.98"/>
+<path fill="none" stroke="white" d="M416.19,-1148.49C403.9,-1137.71 389.18,-1124.72 376,-1112.95 371.13,-1108.6 366.07,-1104.05 361.02,-1099.5"/>
+<path fill="none" stroke="#ba0d39" d="M417.51,-1146.99C405.23,-1136.21 390.5,-1123.22 377.33,-1111.46 372.47,-1107.11 367.41,-1102.56 362.36,-1098.01"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="363.47,-1096.99 353.7,-1092.89 358.78,-1102.19 363.47,-1096.99"/>
+</g>
+<!-- Create Purchase Order&#45;&gt;PURCHORD4 -->
+<g id="edge13" class="edge">
+<title>Create Purchase Order&#45;&gt;PURCHORD4</title>
+<path fill="none" stroke="#a13ccd" d="M443,-1148.45C443,-1141.35 443,-1133.17 443,-1124.68"/>
+<polygon fill="#a13ccd" stroke="#a13ccd" points="446.5,-1124.9 443,-1114.9 439.5,-1124.9 446.5,-1124.9"/>
+</g>
+<!-- Create Purchase Order&#45;&gt;PURCHREQ3 -->
+<g id="edge35" class="edge">
+<title>Create Purchase Order&#45;&gt;PURCHREQ3</title>
+<path fill="none" stroke="#e90638" d="M469.91,-1148.45C485.71,-1134.66 506.2,-1116.77 524.95,-1100.41"/>
+<polygon fill="#e90638" stroke="#e90638" points="527.04,-1103.22 532.27,-1094.01 522.44,-1097.95 527.04,-1103.22"/>
+</g>
+<!-- Plan Goods Issue&#45;&gt;MATERIAL7 -->
+<g id="edge4" class="edge">
+<title>Plan Goods Issue&#45;&gt;MATERIAL7</title>
+<path fill="none" stroke="#ba0d39" d="M513.01,-413.42C516.9,-398.06 522.18,-377.22 527.24,-357.28"/>
+<path fill="none" stroke="white" d="M514.94,-413.91C518.84,-398.55 524.12,-377.71 529.17,-357.77"/>
+<path fill="none" stroke="#ba0d39" d="M516.88,-414.4C520.78,-399.04 526.06,-378.2 531.11,-358.27"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="532.51,-358.86 531.57,-348.3 525.72,-357.14 532.51,-358.86"/>
+</g>
+<!-- Verify Material&#45;&gt;MATERIAL9 -->
+<g id="edge27" class="edge">
+<title>Verify Material&#45;&gt;MATERIAL9</title>
+<path fill="none" stroke="#ba0d39" d="M769.12,-414.4C765.22,-399.04 759.94,-378.2 754.89,-358.27"/>
+<path fill="none" stroke="white" d="M771.06,-413.91C767.16,-398.55 761.88,-377.71 756.83,-357.77"/>
+<path fill="none" stroke="#ba0d39" d="M772.99,-413.42C769.1,-398.06 763.82,-377.22 758.76,-357.28"/>
+<polygon fill="#ba0d39" stroke="#ba0d39" points="760.28,-357.14 754.43,-348.3 753.49,-358.86 760.28,-357.14"/>
 </g>
 </g>
 </svg>
