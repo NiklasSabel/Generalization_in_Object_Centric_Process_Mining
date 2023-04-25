@@ -2,10 +2,15 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from ocpa.objects.log.importer.ocel import factory as ocel_import_factory
+from ocpa.objects.log.importer.csv import factory as ocel_import_factory_csv
+from ocpa.algo.discovery.ocpn import algorithm as ocpn_discovery_factory
+from ocpa.objects.oc_petri_net.obj import ObjectCentricPetriNet
 import pickle
 import logging
 import numpy as np
 from tqdm import tqdm
+import os
+import re
 
 #function to filter out the silent transitions defined by a list from a given dictionary
 def filter_silent_transitions(dic,silent_transitions):
@@ -21,6 +26,73 @@ def filter_silent_transitions(dic,silent_transitions):
             new_values = [val for val in values if val not in silent_transitions]
             updated_dictionary[key] = new_values
     return updated_dictionary
+
+def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = None):
+    """
+    Function to generate the variant model of an JSONOCEL-log, return it and save it as svg.
+    :param ocel: given OCEL-log, type: OCEL-Log
+    :param save_path_logs: path for the saved variant logs, type: string
+    :param object_types: list of object types that are present in the log, type: list
+    :param save_path_visuals: path for the saved variant model visualization, type: string
+    :return: variant model, type: object-centric petri net
+    """
+    #list to save the variant nets
+    ocpn_nets = []
+    n = 0 # running variable for number of variants
+    for variant in tqdm(ocel.variants, desc="Generating Variant Models"):
+        # for each variant filter the log on all the cases belonging to this variant
+        filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
+        # save the pandas df to a csv file such that we can reload it as object-centric log
+        filename = f"{save_path_logs}{n}.csv"
+        filtered.to_csv(filename)
+        parameters = {
+            "obj_names": object_types,
+            "val_names": [],
+            "act_name": "event_activity",
+            "time_name": "event_timestamp",
+            "sep": ",",
+        }
+        ocel_new = ocel_import_factory_csv.apply(file_path=filename, parameters=parameters)
+        ocpn_new = ocpn_discovery_factory.apply(ocel_new, parameters={"debug": False})
+        # append all the variant petri nets to our predefined list
+        ocpn_nets.append(ocpn_new)
+        n += 1
+        # define empty lists for the final sets of arcs, places, and transitions for the final petri net
+    Arcs = []
+    Places = []
+    Transitions = []
+    # for every petri net in our list
+    for i in tqdm(range(len(ocpn_nets)), desc="Processing Variant Nets"):
+        # first check the places if they are initial or final places
+        for place in ocpn_nets[i].places:
+            if (place.initial == True) | (place.final == True):
+                # Find the number at the end of the string of the intial/final places and swap them with inital/final respectively
+                match = re.search(r'\d+$', place.name)
+                if match:
+                    # Get the matched string and strip it from the original string
+                    matched_number = match.group()
+                    if (place.initial == True):
+                        place.name = f"{place.name.rstrip(matched_number)}_initial"
+                        Places.append(place)
+                    if (place.final == True):
+                        place.name = f"{place.name.rstrip(matched_number)}_final"
+                        Places.append(place)
+            else:
+                # if not just append the current count of the variant to the place name such that we can distinguish them
+                place.name = f"{place.name}_{i}"
+                Places.append(place)
+        # for all transitions append the current count of the variant to the place name such that we can distinguish them
+        for transition in ocpn_nets[i].transitions:
+            transition.name = f"{transition.name}_{i}"
+            Transitions.append(transition)
+        # add all the arcs to our final set, we do not need to care about the names anymore because these are adopted from the transition and place definitions
+        for arc in ocpn_nets[i].arcs:
+            Arcs.append(arc)
+    print('#########Start generating Object-Centric Petri Net#########')
+    # we generate the final object-centric petri net with our lists of places, transitions, and arcs
+    variant_ocpn = ObjectCentricPetriNet(places = Places, transitions = Transitions, arcs = Arcs)
+    print('#########Finished generating Object-Centric Petri Net#########')
+    return variant_ocpn
 
 #recursive implementation of a depth-first search (DFS) algorithm
 def dfs(graph, visited, activity, preceding_events):
@@ -197,15 +269,22 @@ logger.addHandler(file_handler)
 
 # Log a message
 logger.info('This log file shows the results of the variant model negative events for the BPI log')
+filename_variant = "/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_variant_log.csv"
+object_types = ["incident","customer"]
+parameters = {"obj_names": object_types,
+              "val_names": [],
+              "act_name": "event_activity",
+              "time_name": "event_timestamp",
+              "sep": ","}
+ocel_variant = ocel_import_factory_csv.apply(file_path=filename_variant, parameters=parameters)
 
+filename = "/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/jsonocel/DS3.jsonocel"
+ots = ["incident","customer"]
+ocel = ocel_import_factory.apply(filename)
+variant_ocpn = generate_variant_model(ocel,save_path_logs='../src/data/csv/DS3_variants/DS3_variant',object_types = ots)
 
-filename_variant = "/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi2017_variant_log.jsonocel"
-ocel_variant = ocel_import_factory.apply(filename_variant)
-
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
-    variant_ocpn = pickle.load(file)
 
 value = negative_events_without_weighting (ocel_variant, variant_ocpn)
 print(value)
 logger.info("*** Evaluate ***")
-logger.info('The value of generalization is %s', value)
+logger.info('The value of generalization for DS3 is %s', value)
