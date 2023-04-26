@@ -4,4 +4,4 @@
 #SBATCH --time=72:00:00
 #SBATCH --export=NONE
 
-python run_variant_model.py
+python run_variant_models.py

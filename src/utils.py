@@ -9,8 +9,41 @@ import re
 import numpy as np
 import os
 from tqdm import tqdm
+import random
 
 # This python file serves as storage for functions that can be used throughout the thesis
+
+#function to filter out the silent transitions defined by a list from a given dictionary
+def filter_silent_transitions(dic,silent_transitions):
+    """
+    Function to filter out the silent transitions defined by a list from a given dictionary.
+    :param dic: dictionary to be filtered, type: dictionary
+    :param silent_transitions: list of silent transitions in an ocel log, type: list
+    :return updated_dictionary: filtered dictionary, type: dictionary
+    """
+    updated_dictionary = {}
+    for key, values in dic.items():
+        if key not in silent_transitions:
+            new_values = [val for val in values if val not in silent_transitions]
+            updated_dictionary[key] = new_values
+    return updated_dictionary
+
+#recursive implementation of a depth-first search (DFS) algorithm
+def dfs(graph, visited, activity, preceding_events):
+    """
+    Function to perform a depth-first search (DFS) algorithm on the activity graph.
+    :param graph: activity graph, type: dictionary
+    :param visited: set of already visited nodes, type: set
+    :param activity: current activity, type: string
+    :param preceding_events: list to store the preceding events, type: list
+    """
+    #takes as input the activity graph (represented as a dictionary), a set of visited nodes, the current activity, and a list to store the preceding events.
+    visited.add(activity)
+    for preceding_event in graph[activity]:
+        #eighboring activity has not been visited yet, the algorithm visits it by calling the dfs function with the neighboring activity as the current activity.
+        if preceding_event not in visited:
+            dfs(graph, visited, preceding_event, preceding_events)
+    preceding_events.append(activity)
 
 def get_happy_path_log(load_path, save_path=None) :
     """
@@ -192,3 +225,172 @@ def generate_variant_log(ocel, save_path, filtered = False):
         df['event_activity'] = df.apply(lambda x: f"{x['event_activity']}_{mapping[x['event_variant'][1]]}", axis=1)
     df.to_csv(save_path)
     return df
+
+
+#function to generate a sample from traces from an object-centric petri net
+def sample_traces(ocel, ocpn, amount, length = None):
+    """
+    Function to generate a sample of traces from an object-centric petri net.
+    :param ocel: given OCEL-log, type: OCEL-Log
+    :param ocpn: given object-centric petri net, type: ObjectCentricPetriNet
+    :param amount: amount of traces to be generated, type: int
+    :param length: maximum length of the traces to be generated, if not given, gets generated as double the average length in th log, type: int
+    """
+   # we create another dictionary that only contains the the value inside the list to be able to derive the case
+    mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
+    # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
+    ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
+    # dictionary to store each activity as key and a list of its prior states/places as value
+    targets = {}
+    # dictionary to store each activity as key and a list of its following states/places as value
+    sources = {}
+    for arc in tqdm(ocpn.arcs, desc="Check the arcs"):
+        # for each arc, check if our target is a valid transition
+        if arc.target in ocpn.transitions:
+            # load all the prior places of a valid transition into a dictionary, where the key is the transition and the value
+            # a list of all directly prior places
+            if arc.target.name in targets:
+                targets[arc.target.name].append(arc.source.name)
+            else:
+                targets[arc.target.name] = [arc.source.name]
+        if arc.source in ocpn.transitions:
+            # load all the following places of a valid transition into a dictionary, where the key is the transition and the value
+            # a list of all directly following places
+            if arc.source.name in sources:
+                sources[arc.source.name].append(arc.target.name)
+            else:
+                sources[arc.source.name] = [arc.target.name]
+    # generate an empty dictionary to store the directly preceeding transition of an activity
+    preceding_activities = {}
+    # use the key and value of targets and source to generate the dictionary
+    for target_key, target_value in targets.items():
+        preceding_activities[target_key] = []
+        for source_key, source_value in sources.items():
+            for element in target_value:
+                if element in source_value:
+                    preceding_activities[target_key].append(source_key)
+                    break
+    # generate an empty dictionary to store the directly succeeding transition of an activity
+    succeeding_activities = {}
+    for source_key, source_value in sources.items():
+        succeeding_activities[source_key] = []
+        for target_key, target_value in targets.items():
+            for element in source_value:
+                if element in target_value:
+                    succeeding_activities[source_key].append(target_key)
+                    break
+    # store the name of all silent transitions in the log
+    silent_transitions = [x.name for x in ocpn.transitions if x.silent]
+    # replace the silent transitions in the succeeding activities dictionary by creating a new dictionary to store the modified values
+    succeeding_activities_updated = {}
+    # Iterate through the dictionary
+    for key, values in succeeding_activities.items():
+        # Create a list to store the modified values for this key
+        new_values = []
+        # Iterate through the values of each key
+        for i in range(len(values)):
+            # Check if the value is in the list of silent transitions
+            if values[i] in silent_transitions:
+                # Replace the value with the corresponding value from the dictionary
+                new_values.extend(succeeding_activities[values[i]])
+            else:
+                # If the value is not in the list of silent transitions, add it to the new list
+                new_values.append(values[i])
+        # Add the modified values to the new dictionary
+        succeeding_activities_updated[key] = new_values
+    # create an empty dictionary to store all the precedding activities of an activity
+    preceding_events_dict = {}
+    # use a depth-first search (DFS) algorithm to traverse the activity graph and
+    # create a list of all preceding events for each activity in the dictionary for directly preceding activities
+    for activity in preceding_activities:
+        # empty set for all the visited activities
+        visited = set()
+        # list for all currently preceding events
+        preceding_events = []
+        dfs(preceding_activities, visited, activity, preceding_events)
+        # we need to remove the last element from the list because it corresponds to the activity itself
+        preceding_events_dict[activity] = preceding_events[:-1][::-1]
+    # delete all possible silent transitions from preceding_events_dict (dict where all direct preceeding events are stored)
+    filtered_preceeding_events_full = filter_silent_transitions(preceding_events_dict, silent_transitions)
+    # delete all possible silent transitions from filtered_preceeding_events (dict where only direct preceeding events are stored)
+    filtered_preceeding_events = filter_silent_transitions(preceding_activities, silent_transitions)
+    # delete all possible silent transitions from succeeding_activities_updated (dict where only direct preceeding events are stored)
+    filtered_succeeding_activities_updated = filter_silent_transitions(succeeding_activities_updated,silent_transitions)
+    #get average length of an process execution in the original log
+    # group by event_execution and count the number of rows in each group
+    grouped = ocel.log.log.groupby('event_execution').count()
+
+    # find the event_execution with the lowest and highest number of rows to filter out outliers that distort the length
+    lowest = grouped['event_activity'].idxmin()
+    highest = grouped['event_activity'].idxmax()
+
+    # filter out the rows corresponding to the process executions with the lowest and highest number of rows to filter out outliers
+    df_filtered = ocel.log.log[(ocel.log.log['event_execution'] != lowest) & (ocel.log.log['event_execution'] != highest)]
+
+    # group by event_execution and count the number of rows in each group again
+    grouped_filtered = df_filtered.groupby('event_execution').count()
+
+    # calculate the average number of activities per process execution
+    avg_activities = grouped_filtered.mean()['event_activity']
+    if length == None:
+        limit_length = np.round(2 * avg_activities).astype(int)
+    else:
+        limit_length = length
+    #define an empty list for the event log
+    event_log_sampled = []
+    #sample the desired amount of traces
+    for j in tqdm(range(amount), desc="Generate the traces"):
+        #get a list of all activities that need to be executed before the process is finished
+        end_activities = [key for key, value in filtered_succeeding_activities_updated.items() if not value]
+        # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
+        if filtered_preceeding_events==filtered_succeeding_activities_updated:
+            enabled = list(np.unique(ocel.log.log.event_activity))
+        else:
+            # list for all the activities that are enabled, starting from all activities that do not have any preceeding activity
+            enabled = [key for key, value in filtered_preceeding_events_full.items() if not value]
+        # initialise a list of already executed activities in this trace
+        trace = []
+        # the maximum length of a trace is the double of the average trace length in the log
+        for i in range(limit_length):
+            # get a random activity from the enabled cases to add to the trace
+            # check if there are any enabled activities
+            if enabled:
+                # generate a random index for an enabled activity
+                idx = random.randint(0, len(enabled)-1)
+
+                #get the current activity
+                executed_activity = enabled[idx]
+
+                # add the activity at the random index to the trace
+                trace.append(executed_activity)
+
+                # remove the activity from enabled activities
+                enabled.remove(executed_activity)
+            # get all possible new enabled activities
+            possible_enabled = filtered_succeeding_activities_updated[executed_activity]
+            # check if each activity has more than one directly preceeding state
+            for i in range(len(possible_enabled)):
+                # check if an event has two or more activities that need to be executed before the event can take place, if not add events to enabled
+                if len(filtered_preceeding_events[possible_enabled[i]]) < 2:
+                    enabled.append(possible_enabled[i])
+                # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
+                elif filtered_preceeding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
+                    possible_enabled[i]]:
+                    enabled.append(possible_enabled[i])
+                else:
+                    # if yes, check if all the needed activities have already been performed in this trace
+                    if all(elem in trace for elem in filtered_preceeding_events[possible_enabled[i]]):
+                        enabled.append(possible_enabled[i])
+            #check if activity is an end activity
+            if executed_activity in end_activities:
+                #if yes get all activites that need to be executed beforehand
+                preceeding_activities = filtered_preceeding_events_full[executed_activity]
+                #delete these activites from the enabled list if a loop may be possible
+                enabled = [x for x in enabled if x not in preceeding_activities]
+            # delete all duplicates from the enabled list
+            enabled = list(set(enabled))
+            #check if all end activities have been performed and if end_activities is non empty
+            if end_activities and all(x in trace for x in end_activities):
+                break
+        event_log_sampled.append(trace)
+    return event_log_sampled

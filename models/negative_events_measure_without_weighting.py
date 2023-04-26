@@ -1,38 +1,6 @@
 import numpy as np
 from tqdm import tqdm
-
-#function to filter out the silent transitions defined by a list from a given dictionary
-def filter_silent_transitions(dic,silent_transitions):
-    """
-    Function to filter out the silent transitions defined by a list from a given dictionary.
-    :param dic: dictionary to be filtered, type: dictionary
-    :param silent_transitions: list of silent transitions in an ocel log, type: list
-    :return updated_dictionary: filtered dictionary, type: dictionary
-    """
-    updated_dictionary = {}
-    for key, values in dic.items():
-        if key not in silent_transitions:
-            new_values = [val for val in values if val not in silent_transitions]
-            updated_dictionary[key] = new_values
-    return updated_dictionary
-
-#recursive implementation of a depth-first search (DFS) algorithm
-def dfs(graph, visited, activity, preceding_events):
-    """
-    Function to perform a depth-first search (DFS) algorithm on the activity graph.
-    :param graph: activity graph, type: dictionary
-    :param visited: set of already visited nodes, type: set
-    :param activity: current activity, type: string
-    :param preceding_events: list to store the preceding events, type: list
-    """
-    #takes as input the activity graph (represented as a dictionary), a set of visited nodes, the current activity, and a list to store the preceding events.
-    visited.add(activity)
-    for preceding_event in graph[activity]:
-        #eighboring activity has not been visited yet, the algorithm visits it by calling the dfs function with the neighboring activity as the current activity.
-        if preceding_event not in visited:
-            dfs(graph, visited, preceding_event, preceding_events)
-    preceding_events.append(activity)
-
+from src.utils import filter_silent_transitions, dfs
 
 def negative_events_without_weighting(ocel, ocpn):
     """
