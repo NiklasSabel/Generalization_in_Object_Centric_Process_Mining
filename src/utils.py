@@ -345,6 +345,20 @@ def sample_traces(ocel, ocpn, amount, length = None):
         # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
         if filtered_preceeding_events==filtered_succeeding_activities_updated:
             enabled = list(np.unique(ocel.log.log.event_activity))
+         #check if one of the transitions ends with a number, then we have a variant model
+        elif list(ocpn.transitions)[0].name[-1].isdigit():
+            #generate the variants
+            ocel.variants
+            # get the amount of variants in the log
+            amount_variants = len(np.unique(ocel.log.log['event_variant']))
+            # Generate a random integer between 0 and amount of variants -1 to generate the path we are using
+            trace_number = random.randint(0, amount_variants-1)
+            # Use a list comprehension to filter out end activities that don't end with the trace number, also checks string length to avoid matching numbers containing the target number.
+            end_activities = [x for x in end_activities if x.endswith(str(trace_number)) and (len(x) == len(str(trace_number)) or not x[-len(str(trace_number))-1].isdigit())]
+            #generate the list of enabled activities
+            enabled = [key for key, value in filtered_preceeding_events_full.items() if not value]
+            # Use a list comprehension to filter out enabled activities that don't end with the trace number, also checks string length to avoid matching numbers containing the target number.
+            enabled = [x for x in enabled if x.endswith(str(trace_number)) and (len(x) == len(str(trace_number)) or not x[-len(str(trace_number))-1].isdigit())]
         else:
             # list for all the activities that are enabled, starting from all activities that do not have any preceeding activity
             enabled = [key for key, value in filtered_preceeding_events_full.items() if not value]
