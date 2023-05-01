@@ -1,7 +1,16 @@
+import warnings
+warnings.filterwarnings('ignore')
+
+import pandas as pd
+import numpy as np
+import pickle
+import logging
 import numpy as np
 from tqdm import tqdm
-import random
-
+import os
+import re
+import numpy as np
+from tqdm import tqdm
 def filter_silent_transitions(dic,silent_transitions):
     """
     Function to filter out the silent transitions defined by a list from a given dictionary.
@@ -178,15 +187,13 @@ def negative_events_without_weighting(ocel, ocpn):
     generalization = AG / (AG + DG)
     return np.round(generalization, 4)
 
-# Log a message
-logger.info('This log file shows the results of the variant model baseline for the DS4 log')
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle", "rb") as file:
-    ocel_variant = pickle.load(file)
+ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
+
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
 
 value = negative_events_without_weighting(ocel_variant,variant_ocpn)
 print(value)
-logger.info("*** Evaluate ***")
-logger.info('The value of generalization for negative events for DS4 is %s', value)
+print("*** Evaluate ***")
+print(f'The value of generalization for negative events for DS4 is {value}')

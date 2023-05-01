@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore')
 
+import pandas as pd
 import numpy as np
 import pickle
 import logging
@@ -146,18 +147,18 @@ def alignment_measure_states(ocel,ocpn):
     return np.round((1 - np.sum(pnew)/len(states)),4)
 
 
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle", "rb") as file:
-    ocel_variant = pickle.load(file)
+ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
+
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
 
 value = alignment_measure_events(ocel_variant,variant_ocpn)
 print(value)
-logger.info("*** Evaluate ***")
-logger.info('The value of generalization for events for  DS4 is %s', value)
+print("*** Evaluate ***")
+print(f'The value of generalization for events for  DS4 is {value}')
 
 value = alignment_measure_states(ocel_variant,variant_ocpn)
 print(value)
-logger.info("*** Evaluate ***")
-logger.info('The value of generalization for states for  DS4 is %s', value)
+print("*** Evaluate ***")
+print(f'The value of generalization for states for  DS4 is {value}', )
