@@ -121,37 +121,39 @@ def create_flower_model(load_path,ots,save_path=None):
         ocpn_vis_factory.save(gviz, save_path)
     return flower_ocpn
 
-def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = None):
+def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = None,save=None):
     """
     Function to generate the variant model of an JSONOCEL-log, return it and save it as svg.
     :param ocel: given OCEL-log, type: OCEL-Log
     :param save_path_logs: path for the saved variant logs, type: string
     :param object_types: list of object types that are present in the log, type: list
     :param save_path_visuals: path for the saved variant model visualization, type: string
+    :param save: indicator if variant logs need to be saved again, if not generated before, type: string
     :return: variant model, type: object-centric petri net
     """
     #list to save the variant nets
     ocpn_nets = []
     n = 0 # running variable for number of variants
     for variant in tqdm(ocel.variants, desc="Generating Variant Models"):
-        # for each variant filter the log on all the cases belonging to this variant
-        filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
-        # save the pandas df to a csv file such that we can reload it as object-centric log
         filename = f"{save_path_logs}{n}.csv"
-        filtered.to_csv(filename)
-        parameters = {
-            "obj_names": object_types,
-            "val_names": [],
-            "act_name": "event_activity",
-            "time_name": "event_timestamp",
-            "sep": ",",
-        }
+        if save is not None:
+            # for each variant filter the log on all the cases belonging to this variant
+            filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
+            # save the pandas df to a csv file such that we can reload it as object-centric log
+            filtered.to_csv(filename)
+            parameters = {
+                "obj_names": object_types,
+                "val_names": [],
+                "act_name": "event_activity",
+                "time_name": "event_timestamp",
+                "sep": ",",
+            }
         ocel_new = ocel_import_factory_csv.apply(file_path=filename, parameters=parameters)
         ocpn_new = ocpn_discovery_factory.apply(ocel_new, parameters={"debug": False})
         # append all the variant petri nets to our predefined list
         ocpn_nets.append(ocpn_new)
         n += 1
-        # define empty lists for the final sets of arcs, places, and transitions for the final petri net
+    # define empty lists for the final sets of arcs, places, and transitions for the final petri net
     Arcs = []
     Places = []
     Transitions = []
