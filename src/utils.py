@@ -235,6 +235,7 @@ def sample_traces(ocel, ocpn, amount, length = None):
     :param ocpn: given object-centric petri net, type: ObjectCentricPetriNet
     :param amount: amount of traces to be generated, type: int
     :param length: maximum length of the traces to be generated, if not given, gets generated as double the average length in th log, type: int
+    :return: list of sampled traces in lists, type: list
     """
    # we create another dictionary that only contains the the value inside the list to be able to derive the case
     mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
@@ -338,6 +339,8 @@ def sample_traces(ocel, ocpn, amount, length = None):
         limit_length = length
     #define an empty list for the event log
     event_log_sampled = []
+    # store the name of all non-silent transitions in the log to check for variant model in if else statements
+    non_silent_transitions = [x.name for x in ocpn.transitions if not x.silent]
     #sample the desired amount of traces
     for j in tqdm(range(amount), desc="Generate the traces"):
         #get a list of all activities that need to be executed before the process is finished
@@ -345,8 +348,8 @@ def sample_traces(ocel, ocpn, amount, length = None):
         # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
         if filtered_preceeding_events==filtered_succeeding_activities_updated:
             enabled = list(np.unique(ocel.log.log.event_activity))
-         #check if one of the transitions ends with a number, then we have a variant model
-        elif list(ocpn.transitions)[0].name[-1].isdigit():
+        #check if one of the non-silent transitions ends with a number, then we have a variant model
+        elif non_silent_transitions[0][-1].isdigit():
             #generate the variants
             ocel.variants
             # get the amount of variants in the log
