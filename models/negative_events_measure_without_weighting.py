@@ -36,7 +36,7 @@ def negative_events_without_weighting(ocel, ocpn):
                 sources[arc.source.name].append(arc.target.name)
             else:
                 sources[arc.source.name] = [arc.target.name]
-    # generate an empty dictionary to store the directly preceeding transition of an activity
+    # generate an empty dictionary to store the directly preceding transition of an activity
     preceding_activities = {}
     # use the key and value of targets and source to generate the dictionary
     for target_key, target_value in targets.items():
@@ -74,7 +74,7 @@ def negative_events_without_weighting(ocel, ocpn):
                 new_values.append(values[i])
         # Add the modified values to the new dictionary
         succeeding_activities_updated[key] = new_values
-    # create an empty dictionary to store all the precedding activities of an activity
+    # create an empty dictionary to store all the preceding activities of an activity
     preceding_events_dict = {}
     # use a depth-first search (DFS) algorithm to traverse the activity graph and
     # create a list of all preceding events for each activity in the dictionary for directly preceding activities
@@ -86,23 +86,23 @@ def negative_events_without_weighting(ocel, ocpn):
         dfs(preceding_activities, visited, activity, preceding_events)
         # we need to remove the last element from the list because it corresponds to the activity itself
         preceding_events_dict[activity] = preceding_events[:-1][::-1]
-    # delete all possible silent transitions from preceding_events_dict (dict where all direct preceeding events are stored)
-    filtered_preceeding_events_full = filter_silent_transitions(preceding_events_dict, silent_transitions)
-    # delete all possible silent transitions from filtered_preceeding_events (dict where only direct preceeding events are stored)
-    filtered_preceeding_events = filter_silent_transitions(preceding_activities, silent_transitions)
-    # delete all possible silent transitions from succeeding_activities_updated (dict where only direct preceeding events are stored)
+    # delete all possible silent transitions from preceding_events_dict (dict where all direct preceding events are stored)
+    filtered_preceding_events_full = filter_silent_transitions(preceding_events_dict, silent_transitions)
+    # delete all possible silent transitions from filtered_preceding_events (dict where only direct preceding events are stored)
+    filtered_preceding_events = filter_silent_transitions(preceding_activities, silent_transitions)
+    # delete all possible silent transitions from succeeding_activities_updated (dict where only direct preceding events are stored)
     filtered_succeeding_activities_updated = filter_silent_transitions(succeeding_activities_updated,
                                                                        silent_transitions)
     # generate a grouped df such that we can iterate through the log case by case (sort by timestamp to ensure the correct process sequence)
     grouped_df = ocel.log.log.sort_values('event_timestamp').groupby('event_execution')
-    DG = 0  # Disallowed Generalization intialisation
-    AG = 0  # Allowed Generalization intialisation
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
     # Iterate over each group
     for group_name, group_df in tqdm(grouped_df, total=len(grouped_df),
                                      desc="Calculate Generalization for all process executions"):
         # Iterate over each row in the group
-        # list for all the activities that are enabled, starting from all activities that do not have any preceeding activity
-        enabled = [key for key, value in filtered_preceeding_events_full.items() if not value]
+        # list for all the activities that are enabled, starting from all activities that do not have any preceding activity
+        enabled = [key for key, value in filtered_preceding_events_full.items() if not value]
         # initialise a list of already executed activities in this trace
         trace = []
         # iterate through each case/process execution
@@ -125,21 +125,21 @@ def negative_events_without_weighting(ocel, ocpn):
             if row['event_activity'] in filtered_succeeding_activities_updated:
                 # get all possible new enabled activities
                 possible_enabled = filtered_succeeding_activities_updated[row['event_activity']]
-                # check if each activity has more than one directly preceeding state
+                # check if each activity has more than one directly preceding state
                 for i in range(len(possible_enabled)):
                     # check if an event has two or more activities that need to be executed before the event can take place, if not add events to enabled
-                    if len(filtered_preceeding_events[possible_enabled[i]]) < 2:
+                    if len(filtered_preceding_events[possible_enabled[i]]) < 2:
                         enabled.append(possible_enabled[i])
-                    # if all succeeding events equal all preceeding events, we have a flower model and almost everything is enabled all the time
-                    elif filtered_preceeding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
+                    # if all succeeding events equal all preceding events, we have a flower model and almost everything is enabled all the time
+                    elif filtered_preceding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
                         possible_enabled[i]]:
                         enabled.append(possible_enabled[i])
                     else:
                         # if yes, check if all the needed activities have already been performed in this trace
-                        if all(elem in trace for elem in filtered_preceeding_events[possible_enabled[i]]):
+                        if all(elem in trace for elem in filtered_preceding_events[possible_enabled[i]]):
                             enabled.append(possible_enabled[i])
-            # extend the list with all elements that do not have any preceeding activity and are therefore enabled anyways in our process model
-            enabled.extend([key for key, value in filtered_preceeding_events_full.items() if not value])
+            # extend the list with all elements that do not have any preceding activity and are therefore enabled anyways in our process model
+            enabled.extend([key for key, value in filtered_preceding_events_full.items() if not value])
             # delete all duplicates from the enabled list
             enabled = list(set(enabled))
     # calculate the generalization based on the paper
