@@ -5,7 +5,7 @@ import pandas as pd
 import pickle
 import numpy as np
 from tqdm import tqdm
-
+import logging
 def filter_case_variants(ocel, variant_column, id_column, save_path):
     """
     Function to filter an object-centric event log such that it only contains one case per case variant of the original log.
@@ -140,6 +140,12 @@ def alignment_measure_states(ocel,ocpn):
         #derive the final generalization value
     return np.round((1 - np.sum(pnew)/len(states)),4)
 
+# Create a logger object
+logger = logging.getLogger('events')
+logger.setLevel(logging.DEBUG)
+
+logger.info("*** Events ***")
+
 
 ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
 
@@ -148,11 +154,9 @@ with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_P
     variant_ocpn = pickle.load(file)
 
 value = alignment_measure_events(ocel_variant,variant_ocpn)
-print(value)
-print("*** Evaluate ***")
-print(f'The value of generalization for events for  DS4 is {value}')
+logger.info("*** Evaluate ***")
+logger.info(f'The value of generalization for events for  DS4 is {value}')
 
 value = alignment_measure_states(ocel_variant,variant_ocpn)
-print(value)
-print("*** Evaluate ***")
-print(f'The value of generalization for states for  DS4 is {value}', )
+logger.info("*** Evaluate ***")
+logger.info(f'The value of generalization for states for  DS4 is {value}', )

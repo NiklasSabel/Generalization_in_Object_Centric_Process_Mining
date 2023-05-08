@@ -5,6 +5,7 @@ import pandas as pd
 import pickle
 import numpy as np
 from tqdm import tqdm
+import logging
 def filter_silent_transitions(dic,silent_transitions):
     """
     Function to filter out the silent transitions defined by a list from a given dictionary.
@@ -181,6 +182,11 @@ def negative_events_without_weighting(ocel, ocpn):
     generalization = AG / (AG + DG)
     return np.round(generalization, 4)
 
+# Create a logger object
+logger = logging.getLogger('negative')
+logger.setLevel(logging.DEBUG)
+logger.info("*** Negative Events ***")
+
 ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
 
 
@@ -188,6 +194,5 @@ with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_P
     variant_ocpn = pickle.load(file)
 
 value = negative_events_without_weighting(ocel_variant,variant_ocpn)
-print(value)
-print("*** Evaluate ***")
-print(f'The value of generalization for negative events for DS4 is {value}')
+logger.info("*** Evaluate ***")
+logger.info(f'The value of generalization for negative events for DS4 is {value}')
