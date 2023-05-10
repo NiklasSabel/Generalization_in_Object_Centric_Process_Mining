@@ -169,4 +169,4 @@ logger.info(f'The value of generalization for events for  DS4 is {value}')
 
 value = alignment_measure_states(ocel_variant,variant_ocpn)
 logger.info("*** Evaluate ***")
-logger.info(f'The value of generalization for states for  DS4 is {value}', )
+logger.info(f'The value of generalization for states for  DS4 is {value}' )
