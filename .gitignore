@@ -78,6 +78,8 @@ target/
 # exclude data from source control by default
 /data/
 src/data
+#exclude Avatar in a first place
+models/AVATAR_master
 
 
 # Mac OS-specific storage files
