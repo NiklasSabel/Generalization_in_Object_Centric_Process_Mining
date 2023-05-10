@@ -140,21 +140,13 @@ def alignment_measure_states(ocel,ocpn):
         #derive the final generalization value
     return np.round((1 - np.sum(pnew)/len(states)),4)
 
-log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-logger = logging.getLogger(__name__)
 
-# To override the default severity of logging
-logger.setLevel('DEBUG')
 
-# Use FileHandler() to log to a file
-file_handler = logging.FileHandler("mylogs_events.log")
-formatter = logging.Formatter(log_format)
-file_handler.setFormatter(formatter)
 
-# Don't forget to add the file handler
-logger.addHandler(file_handler)
+# Set up the logger
+logging.basicConfig(filename='events_measure.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-logger.info("*** Events ***")
+logging.info("*** Events ***")
 
 
 ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
@@ -164,9 +156,9 @@ with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_P
     variant_ocpn = pickle.load(file)
 
 value = alignment_measure_events(ocel_variant,variant_ocpn)
-logger.info("*** Evaluate ***")
-logger.info(f'The value of generalization for events for  DS4 is {value}')
+logging.info("*** Evaluate ***")
+logging.info(f'The value of generalization for events for  DS4 is {value}')
 
 value = alignment_measure_states(ocel_variant,variant_ocpn)
-logger.info("*** Evaluate ***")
-logger.info(f'The value of generalization for states for  DS4 is {value}' )
+logging.info("*** Evaluate ***")
+logging.info(f'The value of generalization for states for  DS4 is {value}' )

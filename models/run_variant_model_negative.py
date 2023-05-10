@@ -182,20 +182,9 @@ def negative_events_without_weighting(ocel, ocpn):
     generalization = AG / (AG + DG)
     return np.round(generalization, 4)
 
-log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-logger = logging.getLogger(__name__)
+logging.basicConfig(filename='negative_measure.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# To override the default severity of logging
-logger.setLevel('DEBUG')
-
-# Use FileHandler() to log to a file
-file_handler = logging.FileHandler("mylogs_negative.log")
-formatter = logging.Formatter(log_format)
-file_handler.setFormatter(formatter)
-
-# Don't forget to add the file handler
-logger.addHandler(file_handler)
-logger.info("*** Negative Events ***")
+logging.info("*** Negative Events ***")
 
 ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
 
@@ -204,5 +193,5 @@ with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_P
     variant_ocpn = pickle.load(file)
 
 value = negative_events_without_weighting(ocel_variant,variant_ocpn)
-logger.info("*** Evaluate ***")
-logger.info(f'The value of generalization for negative events for DS4 is {value}')
+logging.info("*** Evaluate ***")
+logging.info(f'The value of generalization for negative events for DS4 is {value}')
