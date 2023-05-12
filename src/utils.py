@@ -141,13 +141,13 @@ def generate_variant_model(ocel,save_path_logs,object_types,save_path_visuals = 
             filtered = ocel.log.log[ocel.log.log.event_variant.apply(lambda x: n in x)]
             # save the pandas df to a csv file such that we can reload it as object-centric log
             filtered.to_csv(filename)
-            parameters = {
-                "obj_names": object_types,
-                "val_names": [],
-                "act_name": "event_activity",
-                "time_name": "event_timestamp",
-                "sep": ",",
-            }
+        parameters = {
+            "obj_names": object_types,
+            "val_names": [],
+            "act_name": "event_activity",
+            "time_name": "event_timestamp",
+            "sep": ",",
+        }
         ocel_new = ocel_import_factory_csv.apply(file_path=filename, parameters=parameters)
         ocpn_new = ocpn_discovery_factory.apply(ocel_new, parameters={"debug": False})
         # append all the variant petri nets to our predefined list
