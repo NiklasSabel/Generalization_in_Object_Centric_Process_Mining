@@ -149,7 +149,7 @@ logging.basicConfig(filename='events_measure.log', level=logging.INFO, format='%
 logging.info("*** Events ***")
 
 
-ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
+ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_filtered.pickle')
 
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
@@ -157,8 +157,8 @@ with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_P
 
 value = alignment_measure_events(ocel_variant,variant_ocpn)
 logging.info("*** Evaluate ***")
-logging.info(f'The value of generalization for events for  DS4 is {value}')
+logging.info(f'The value of generalization for filtered events for  DS4 is {value}')
 
 value = alignment_measure_states(ocel_variant,variant_ocpn)
 logging.info("*** Evaluate ***")
-logging.info(f'The value of generalization for states for  DS4 is {value}' )
+logging.info(f'The value of generalization for filtered states for  DS4 is {value}' )
