@@ -9,7 +9,9 @@ import re
 import numpy as np
 import os
 from tqdm import tqdm
+import pandas as pd
 import random
+from datetime import datetime, timedelta
 
 # This python file serves as storage for functions that can be used throughout the thesis
 
@@ -413,3 +415,131 @@ def sample_traces(ocel, ocpn, amount, length = None):
                 break
         event_log_sampled.append(trace)
     return event_log_sampled
+
+
+def process_log(gen_log, ocel, ocpn, save_path = None):
+    """
+    This function takes a generated log and converts it to a log that can be used by the ocel object
+    :param gen_log: the generated log
+    :param ocel: the original ocel object where the sampled log is based on
+    :param ocpn: the original ocpn object where the sampled log is based on
+    :return: the final log as pandas dataframe
+    """
+    # generate mapping dictionary for activities and objects
+    mapping_dict = {}
+    for transition in ocpn.transitions:
+        if not transition.silent:
+            mapping_dict[transition.name] = list(transition.preset_object_type)
+    # get the unique activities in the log
+    activities = np.unique(ocel.log.log.event_activity)
+    original_log = []
+    # Iterate over each inner list in gen_log
+    for inner_list in gen_log:
+        # Create an empty list to store the original activity names
+        original_inner_list = []
+
+        # Split the concatenated activities into individual words
+        activities_in_inner_list = inner_list[0].split()
+
+        # Initialize the index variable
+        i = 0
+        # Loop through the activities_in_inner_list
+        while i < len(activities_in_inner_list):
+            # Initialize a variable to store the matched activity
+            matched_activity = None
+            # Loop through the activities list to find a match
+            for activity in activities:
+                # Check if the concatenated words match the activity
+                if ' '.join(activities_in_inner_list[i:i + len(activity.split())]).lower() == activity.lower():
+                    # Set the matched activity
+                    matched_activity = activity
+                    # Break the loop as a match is found
+                    break
+
+            # Check if a match is found
+            if matched_activity:
+                # Append the matched activity to the original_inner_list
+                original_inner_list.append(matched_activity)
+                # Update the index by the number of words in the matched activity
+                i += len(matched_activity.split())
+            else:
+                # If no match is found, update the index by 1 to move to the next word
+                i += 1
+
+        # Append the original_inner_list to the original_log
+        original_log.append(original_inner_list)
+    # Create an empty list to store the data
+    data = []
+
+    # Define the start and end date in 2022
+    start_date = datetime(2022, 1, 1)
+
+    # Variables for tracking the date and count
+    current_date = start_date
+    count = 0
+
+    # Iterate over each inner list in original_log
+    for inner_list in original_log:
+
+        # Get the activities in the inner list
+        activities = inner_list
+
+        # Generate a random timestamp within the execution day
+        execution_time = random.uniform(0, 1) * 24
+        execution_timestamp = current_date + timedelta(hours=execution_time)
+
+        # Create a dictionary to store the column values for each activity
+        activity_dict = {
+            'event_activity': [],
+            'event_execution': [],
+            'event_timestamp': []
+        }
+
+        # Add each activity, execution, and timestamp to the data list
+        for activity in activities:
+
+            activity_dict['event_activity'].append(activity)
+            activity_dict['event_execution'].append(count + 1)
+            activity_dict['event_timestamp'].append(execution_timestamp.strftime('%Y-%m-%d %H:%M:%S.%f'))
+
+            # Check if the count is a multiple of 100
+            if count % 100 == 0:
+                current_date += timedelta(days=1)  # Increase the date by 1
+
+            # Increment the timestamp for the next activity within the same execution
+            execution_timestamp += timedelta(minutes=1)
+        count += 1
+        # Get the distinct object types for the activities in the inner list
+        object_types = set()
+        for activity in activities:
+            object_types.update(mapping_dict.get(activity, []))
+
+        # Add columns for each distinct object type and initialize with empty values
+        for object_type in object_types:
+            activity_dict[object_type] = [''] * len(activities)
+
+        # Update the column values with the corresponding objects
+        for idx, activity in enumerate(activities):
+            objects = mapping_dict.get(activity, [])
+            for object_type in objects:
+                activity_dict[object_type][idx] = [f"{object_type}{count}"]
+
+        # Fill empty values in object columns with an empty list
+        for object_type in object_types:
+            activity_dict[object_type] = [value if value != '' else [] for value in activity_dict[object_type]]
+
+        # Extend the data list with the activity_dict
+        data.extend([{k: v[i] for k, v in activity_dict.items()} for i in range(len(activities))])
+
+    # Convert the data list into a pandas DataFrame
+    df_log = pd.DataFrame(data)
+    # Include the index as a column
+    df_log.reset_index(inplace=True)
+
+    # Rename the index column to 'event_id'
+    df_log.rename(columns={'index': 'event_id'}, inplace=True)
+
+    if save_path is not None:
+        df_log.to_csv(save_path, index=False)
+
+    return df_log
