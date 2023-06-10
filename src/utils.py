@@ -232,7 +232,7 @@ def generate_variant_log(ocel, save_path, filtered = False):
 
 
 #function to generate a sample from traces from an object-centric petri net
-def sample_traces(ocel, ocpn, amount, length = None):
+def sample_traces(ocel, ocpn, amount, length = None, save_path = None):
     """
     Function to generate a sample of traces from an object-centric petri net.
     :param ocel: given OCEL-log, type: OCEL-Log
@@ -414,6 +414,11 @@ def sample_traces(ocel, ocpn, amount, length = None):
             if end_activities and all(x in trace for x in end_activities):
                 break
         event_log_sampled.append(trace)
+    if save_path is not None:
+        with open(save_path, "w", encoding="utf-8") as file:
+            for sentence in event_log_sampled:
+                line = " ".join(sentence) + "\n"
+                file.write(line)
     return event_log_sampled
 
 
@@ -543,3 +548,5 @@ def process_log(gen_log, ocel, ocpn, save_path = None):
         df_log.to_csv(save_path, index=False)
 
     return df_log
+
+
