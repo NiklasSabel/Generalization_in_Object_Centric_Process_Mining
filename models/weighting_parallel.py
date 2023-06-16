@@ -260,14 +260,14 @@ def negative_events_with_weighting_parallel(ocel, ocpn):
     return grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists
 
 
-logging.basicConfig(filename='negative_measure_weights.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='negative_measure_weights_bpi.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-logging.info("*** Negative Events BPI***")
+logging.info("*** Negative Events BPI normal**")
 
-ocel = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_log.pickle')
+ocel = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_log.pickle')
 
 
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_ocpn.pickle", "rb") as file:
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_ocpn.pickle", "rb") as file:
     ocpn = pickle.load(file)
 
 if __name__ == '__main__':
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     AG = 0  # Allowed Generalization initialisation
 
     # Create a multiprocessing Pool
-    pool = multiprocessing.Pool(5)
+    pool = multiprocessing.Pool(60)
 
     # Prepare the arguments for parallel processing
     args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
@@ -310,3 +310,147 @@ if __name__ == '__main__':
 
     logging.info("*** Evaluate ***")
     logging.info(f'The value of generalization for negative events with weights for bpi normal is {generalization}')
+
+logging.info("*** Negative Events BPI happy**")
+
+
+
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_ocpn_happy.pickle", "rb") as file:
+    ocpn = pickle.load(file)
+
+if __name__ == '__main__':
+
+    # generate the variables needed for the parallel processing
+    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists = negative_events_with_weighting_parallel(
+        ocel, ocpn)
+
+    current_trace_index = 0  # initialise count variable for trace
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
+
+    # Create a multiprocessing Pool
+    pool = multiprocessing.Pool(60)
+
+    # Prepare the arguments for parallel processing
+    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
+             filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists,
+             current_trace_index, AG, DG)
+            for group_key, df_group in grouped_df]
+
+    # Apply the parallel processing to each group with additional variables
+    results = []
+    with tqdm(total=len(grouped_df)) as pbar:
+        for result in pool.imap_unordered(process_group_with, args):
+            results.append(result)
+            pbar.update(1)
+
+    # Calculate the final sums of AG and DG
+    final_AG = sum([result[0] for result in results])
+    final_DG = sum([result[1] for result in results])
+
+    # Close the multiprocessing Pool and join the processes
+    pool.close()
+    pool.join()
+
+    # calculate the generalization based on the paper
+    generalization = final_AG / (final_AG + final_DG)
+    print(np.round(generalization, 4))
+
+    logging.info("*** Evaluate ***")
+    logging.info(f'The value of generalization for negative events with weights for bpi happy is {generalization}')
+
+logging.info("*** Negative Events BPI flower**")
+
+
+
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_ocpn_flower.pickle", "rb") as file:
+    ocpn = pickle.load(file)
+
+if __name__ == '__main__':
+
+    # generate the variables needed for the parallel processing
+    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists = negative_events_with_weighting_parallel(
+        ocel, ocpn)
+
+    current_trace_index = 0  # initialise count variable for trace
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
+
+    # Create a multiprocessing Pool
+    pool = multiprocessing.Pool(60)
+
+    # Prepare the arguments for parallel processing
+    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
+             filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists,
+             current_trace_index, AG, DG)
+            for group_key, df_group in grouped_df]
+
+    # Apply the parallel processing to each group with additional variables
+    results = []
+    with tqdm(total=len(grouped_df)) as pbar:
+        for result in pool.imap_unordered(process_group_with, args):
+            results.append(result)
+            pbar.update(1)
+
+    # Calculate the final sums of AG and DG
+    final_AG = sum([result[0] for result in results])
+    final_DG = sum([result[1] for result in results])
+
+    # Close the multiprocessing Pool and join the processes
+    pool.close()
+    pool.join()
+
+    # calculate the generalization based on the paper
+    generalization = final_AG / (final_AG + final_DG)
+    print(np.round(generalization, 4))
+
+    logging.info("*** Evaluate ***")
+    logging.info(f'The value of generalization for negative events with weights for bpi flower is {generalization}')
+
+logging.info("*** Negative Events BPI variant**")
+
+ocel = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant.pickle')
+
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
+    ocpn = pickle.load(file)
+
+if __name__ == '__main__':
+
+    # generate the variables needed for the parallel processing
+    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists = negative_events_with_weighting_parallel(
+        ocel, ocpn)
+
+    current_trace_index = 0  # initialise count variable for trace
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
+
+    # Create a multiprocessing Pool
+    pool = multiprocessing.Pool(60)
+
+    # Prepare the arguments for parallel processing
+    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
+             filtered_succeeding_activities_updated, events, silent_transitions, trace_list, suffix_lists,
+             current_trace_index, AG, DG)
+            for group_key, df_group in grouped_df]
+
+    # Apply the parallel processing to each group with additional variables
+    results = []
+    with tqdm(total=len(grouped_df)) as pbar:
+        for result in pool.imap_unordered(process_group_with, args):
+            results.append(result)
+            pbar.update(1)
+
+    # Calculate the final sums of AG and DG
+    final_AG = sum([result[0] for result in results])
+    final_DG = sum([result[1] for result in results])
+
+    # Close the multiprocessing Pool and join the processes
+    pool.close()
+    pool.join()
+
+    # calculate the generalization based on the paper
+    generalization = final_AG / (final_AG + final_DG)
+    print(np.round(generalization, 4))
+
+    logging.info("*** Evaluate ***")
+    logging.info(f'The value of generalization for negative events with weights for bpi variant is {generalization}')
