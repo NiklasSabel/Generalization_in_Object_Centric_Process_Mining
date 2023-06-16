@@ -6,6 +6,7 @@ import pickle
 import numpy as np
 from tqdm import tqdm
 import logging
+import multiprocessing
 def filter_silent_transitions(dic,silent_transitions):
     """
     Function to filter out the silent transitions defined by a list from a given dictionary.
@@ -38,15 +39,86 @@ def dfs(graph, visited, activity, preceding_events):
     preceding_events.append(activity)
 
 
-def negative_events_without_weighting(ocel, ocpn):
+def update_global_variables_without(group, filtered_preceding_events_full, filtered_preceding_events,
+                            filtered_succeeding_activities_updated, events, silent_transitions, AG, DG):
     """
-    Function to calculate the negative events measure without weighting based on the used places inside an object-centric petri-net.
+    Function to update the global variables AG and DG based on the paper logic.
+    :param group: group of the event log that is currently processed, type: pandas dataframe
+    :param filtered_preceding_events_full: dictionary that contains all preceding events for each activity, type: dictionary
+    :param filtered_preceding_events: dictionary that contains all directly preceding events for each activity, type: dictionary
+    :param filtered_succeeding_activities_updated: dictionary that contains all succeeding activities for each activity, type: dictionary
+    :param events: list of all activities in the process model, type: list
+    :param silent_transitions: list of all silent transitions in the process model, type: list
+    :param AG: global variable for allowed generalizations, type: int
+    :param DG: global variable for disallowed generalizations, type: int
+    :return: updated values for AG and DG, type: int
+    """
+    # Iterate over each row in the group
+    # list for all the activities that are enabled, starting from all activities that do not have any preceding activity
+    enabled = [key for key, value in filtered_preceding_events_full.items() if not value]
+    # initialise a list of already executed activities in this trace
+    trace = []
+    # iterate through each case/process execution
+    for index, row in group.iterrows():
+        # Get the current negative events based on the current activity to be executed
+        negative_activities = [x for x in events if x != row['event_activity']]
+        # it may happen that an activity is not present in the model but nevertheless executed in the log
+        if row['event_activity'] in enabled:
+            # check which elements in the negative activity list are enabled outside of the current activity
+            enabled.remove(row['event_activity'])
+        # get all the negative events that can not be executed in the process model at the moment
+        disallowed = [value for value in negative_activities if value not in enabled]
+        # add activity that has been executed to trace
+        trace.append(row['event_activity'])
+        # update the values of allowed and disallowed generalizations based on the paper logic
+        AG = AG + len(enabled)
+        DG = DG + len(disallowed)
+
+        # may happen that activities in the log are not in the process model
+        if row['event_activity'] in filtered_succeeding_activities_updated:
+            # get all possible new enabled activities
+            possible_enabled = filtered_succeeding_activities_updated[row['event_activity']]
+            # check if each activity has more than one directly preceding state
+            for i in range(len(possible_enabled)):
+                # check if an event has two or more activities that need to be executed before the event can take place, if not add events to enabled
+                if len(filtered_preceding_events[possible_enabled[i]]) < 2:
+                    enabled.append(possible_enabled[i])
+                # if all succeeding events equal all preceding events, we have a flower model and almost everything is enabled all the time
+                elif filtered_preceding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
+                    possible_enabled[i]]:
+                    enabled.append(possible_enabled[i])
+                else:
+                    # if yes, check if all the needed activities have already been performed in this trace
+                    if all(elem in trace for elem in filtered_preceding_events[possible_enabled[i]]):
+                        enabled.append(possible_enabled[i])
+        # extend the list with all elements that do not have any preceding activity and are therefore enabled anyways in our process model
+        enabled.extend([key for key, value in filtered_preceding_events_full.items() if not value])
+        # delete all duplicates from the enabled list
+        enabled = list(set(enabled))
+    return AG, DG
+
+# Define the function that will be executed in parallel
+def process_group_without(args):
+    """
+    Function to process a group of the event log in parallel
+    :param args: set of variables for the measure calculation (see original function)
+    :return: updated values for AG and DG, type: int
+    """
+    group_key, df_group, filtered_preceding_events_full, filtered_preceding_events, \
+    filtered_succeeding_activities_updated, events, silent_transitions, AG, DG = args
+    AG, DG = update_global_variables_without(df_group, filtered_preceding_events_full, filtered_preceding_events,
+                                     filtered_succeeding_activities_updated, events, silent_transitions, AG, DG)
+    return AG, DG
+
+def negative_events_without_weighting_parallel(ocel, ocpn):
+    """
+    Function to calculate the variables for negative events measure paralle calculation without weighting
     :param ocel: object-centric event log for which the measure should be calculated, type: ocel-log
     :param ocpn: corresponding object-centric petri-net, type: object-centric petri-net
-    :return generalization: final value of the formula, type: float rounded to 4 digits
+    :return: set of variables for the measure calculation (see original function)
     """
     # since the process execution mappings have lists of length one,
-    # we create another dictionary that only contains the value inside the list to be able to derive the case
+    # we create another dictionary that only contains the  value inside the list to be able to derive the case
     mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
     # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
     ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
@@ -131,67 +203,103 @@ def negative_events_without_weighting(ocel, ocpn):
                                                                        silent_transitions)
     # generate a grouped df such that we can iterate through the log case by case (sort by timestamp to ensure the correct process sequence)
     grouped_df = ocel.log.log.sort_values('event_timestamp').groupby('event_execution')
-    DG = 0  # Disallowed Generalization initialisation
-    AG = 0  # Allowed Generalization initialisation
-    # Iterate over each group
-    for group_name, group_df in tqdm(grouped_df, total=len(grouped_df),
-                                     desc="Calculate Generalization for all process executions"):
-        # Iterate over each row in the group
-        # list for all the activities that are enabled, starting from all activities that do not have any preceding activity
-        enabled = [key for key, value in filtered_preceding_events_full.items() if not value]
-        # initialise a list of already executed activities in this trace
-        trace = []
-        # iterate through each case/process execution
-        for index, row in group_df.iterrows():
-            # Get the current negative events based on the current activity to be executed
-            negative_activities = [x for x in events if x != row['event_activity']]
-            # it may happen that an activity is not present in the model but nevertheless executed in the log
-            if row['event_activity'] in enabled:
-                # check which elements in the negative activity list are enabled outside the current activity
-                enabled.remove(row['event_activity'])
-            # get all the negative events that can not be executed in the process model at the moment
-            disallowed = [value for value in negative_activities if value not in enabled]
-            # add activity that has been executed to trace
-            trace.append(row['event_activity'])
-            # update the values of allowed and disallowed generalizations based on the paper logic
-            AG = AG + len(enabled)
-            DG = DG + len(disallowed)
 
-            # may happen that activities in the log are not in the process model
-            if row['event_activity'] in filtered_succeeding_activities_updated:
-                # get all possible new enabled activities
-                possible_enabled = filtered_succeeding_activities_updated[row['event_activity']]
-                # check if each activity has more than one directly preceding state
-                for i in range(len(possible_enabled)):
-                    # check if an event has two or more activities that need to be executed before the event can take place, if not add events to enabled
-                    if len(filtered_preceding_events[possible_enabled[i]]) < 2:
-                        enabled.append(possible_enabled[i])
-                    # if all succeeding events equal all preceding events, we have a flower model and almost everything is enabled all the time
-                    elif filtered_preceding_events[possible_enabled[i]] == filtered_succeeding_activities_updated[
-                        possible_enabled[i]]:
-                        enabled.append(possible_enabled[i])
-                    else:
-                        # if yes, check if all the needed activities have already been performed in this trace
-                        if all(elem in trace for elem in filtered_preceding_events[possible_enabled[i]]):
-                            enabled.append(possible_enabled[i])
-            # extend the list with all elements that do not have any preceding activity and are therefore enabled anyways in our process model
-            enabled.extend([key for key, value in filtered_preceding_events_full.items() if not value])
-            # delete all duplicates from the enabled list
-            enabled = list(set(enabled))
-    # calculate the generalization based on the paper
-    generalization = AG / (AG + DG)
-    return np.round(generalization, 4)
+    return grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions
+
 
 logging.basicConfig(filename='negative_measure.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-logging.info("*** Negative Events ***")
+logging.info("*** Negative Events BPI***")
 
-ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_cel.pickle')
+ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant.pickle')
+
+
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
+    variant_ocpn = pickle.load(file)
+
+if __name__ == '__main__':
+
+    # generate the variables needed for the parallel processing
+    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions = negative_events_without_weighting_parallel(
+        ocel_variant, variant_ocpn)
+
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
+
+    # Create a multiprocessing Pool
+    pool = multiprocessing.Pool(6)
+
+    # Prepare the arguments for parallel processing
+    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
+             filtered_succeeding_activities_updated, events, silent_transitions, AG, DG)
+            for group_key, df_group in grouped_df]
+
+    # Apply the parallel processing to each group with additional variables
+    results = []
+    with tqdm(total=len(grouped_df)) as pbar:
+        for result in pool.imap_unordered(process_group_without, args):
+            results.append(result)
+            pbar.update(1)
+
+    # Calculate the final sums of AG and DG
+    final_AG = sum([result[0] for result in results])
+    final_DG = sum([result[1] for result in results])
+
+    # Close the multiprocessing Pool and join the processes
+    pool.close()
+    pool.join()
+
+    # calculate the generalization based on the paper
+    generalization = final_AG / (final_AG + final_DG)
+    print(np.round(generalization, 4))
+
+logging.info("*** Evaluate ***")
+logging.info(f'The value of generalization for negative events for bpi is {generalization}')
+
+logging.info("*** Negative Events DS4***")
+
+ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant.pickle')
 
 
 with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
 
-value = negative_events_without_weighting(ocel_variant,variant_ocpn)
+if __name__ == '__main__':
+
+    # generate the variables needed for the parallel processing
+    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions = negative_events_without_weighting_parallel(
+        ocel_variant, variant_ocpn)
+
+    DG = 0  # Disallowed Generalization initialisation
+    AG = 0  # Allowed Generalization initialisation
+
+    # Create a multiprocessing Pool
+    pool = multiprocessing.Pool(6)
+
+    # Prepare the arguments for parallel processing
+    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
+             filtered_succeeding_activities_updated, events, silent_transitions, AG, DG)
+            for group_key, df_group in grouped_df]
+
+    # Apply the parallel processing to each group with additional variables
+    results = []
+    with tqdm(total=len(grouped_df)) as pbar:
+        for result in pool.imap_unordered(process_group_without, args):
+            results.append(result)
+            pbar.update(1)
+
+    # Calculate the final sums of AG and DG
+    final_AG = sum([result[0] for result in results])
+    final_DG = sum([result[1] for result in results])
+
+    # Close the multiprocessing Pool and join the processes
+    pool.close()
+    pool.join()
+
+    # calculate the generalization based on the paper
+    generalization = final_AG / (final_AG + final_DG)
+    print(np.round(generalization, 4))
+
 logging.info("*** Evaluate ***")
-logging.info(f'The value of generalization for negative events for DS4 is {value}')
+logging.info(f'The value of generalization for negative events for ds4 is {generalization}')
+
