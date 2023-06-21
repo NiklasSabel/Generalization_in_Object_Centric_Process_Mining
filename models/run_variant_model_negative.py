@@ -206,28 +206,28 @@ def negative_events_without_weighting_parallel(ocel, ocpn):
 
     return grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions
 
+logging.basicConfig(filename='negative_measure_weights_variants.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-logging.basicConfig(filename='negative_measure.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.info("*** Negative Events BPI Variant**")
+variant_ocel = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant.pickle')
+logging.info("*** OCEL loaded**")
 
-logging.info("*** Negative Events BPI***")
-
-ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant.pickle')
-
-
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
+with open("../src/data/csv/bpi_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
+
+logging.info("*** OCPN loaded**")
 
 if __name__ == '__main__':
 
     # generate the variables needed for the parallel processing
     grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions = negative_events_without_weighting_parallel(
-        ocel_variant, variant_ocpn)
+        variant_ocel, variant_ocpn)
 
     DG = 0  # Disallowed Generalization initialisation
     AG = 0  # Allowed Generalization initialisation
 
     # Create a multiprocessing Pool
-    pool = multiprocessing.Pool(6)
+    pool = multiprocessing.Pool(20)
 
     # Prepare the arguments for parallel processing
     args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
@@ -252,54 +252,4 @@ if __name__ == '__main__':
     # calculate the generalization based on the paper
     generalization = final_AG / (final_AG + final_DG)
     print(np.round(generalization, 4))
-
-logging.info("*** Evaluate ***")
-logging.info(f'The value of generalization for negative events for bpi is {generalization}')
-
-logging.info("*** Negative Events DS4***")
-
-ocel_variant = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant.pickle')
-
-
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
-    variant_ocpn = pickle.load(file)
-
-if __name__ == '__main__':
-
-    # generate the variables needed for the parallel processing
-    grouped_df, filtered_preceding_events_full, filtered_preceding_events, filtered_succeeding_activities_updated, events, silent_transitions = negative_events_without_weighting_parallel(
-        ocel_variant, variant_ocpn)
-
-    DG = 0  # Disallowed Generalization initialisation
-    AG = 0  # Allowed Generalization initialisation
-
-    # Create a multiprocessing Pool
-    pool = multiprocessing.Pool(6)
-
-    # Prepare the arguments for parallel processing
-    args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
-             filtered_succeeding_activities_updated, events, silent_transitions, AG, DG)
-            for group_key, df_group in grouped_df]
-
-    # Apply the parallel processing to each group with additional variables
-    results = []
-    with tqdm(total=len(grouped_df)) as pbar:
-        for result in pool.imap_unordered(process_group_without, args):
-            results.append(result)
-            pbar.update(1)
-
-    # Calculate the final sums of AG and DG
-    final_AG = sum([result[0] for result in results])
-    final_DG = sum([result[1] for result in results])
-
-    # Close the multiprocessing Pool and join the processes
-    pool.close()
-    pool.join()
-
-    # calculate the generalization based on the paper
-    generalization = final_AG / (final_AG + final_DG)
-    print(np.round(generalization, 4))
-
-logging.info("*** Evaluate ***")
-logging.info(f'The value of generalization for negative events for ds4 is {generalization}')
-
+    logging.info(f'The value of generalization for negative events without weights for bpi variant is {generalization}')
