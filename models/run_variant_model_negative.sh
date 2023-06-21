@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=multiple
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --time=72:00:00
 #SBATCH --export=NONE
 #SBATCH --ntasks-per-node=40

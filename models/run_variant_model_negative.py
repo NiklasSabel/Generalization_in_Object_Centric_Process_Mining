@@ -227,7 +227,7 @@ if __name__ == '__main__':
     AG = 0  # Allowed Generalization initialisation
 
     # Create a multiprocessing Pool
-    pool = multiprocessing.Pool(20)
+    pool = multiprocessing.Pool(60)
 
     # Prepare the arguments for parallel processing
     args = [(group_key, df_group, filtered_preceding_events_full, filtered_preceding_events,
