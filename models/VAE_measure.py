@@ -1,25 +1,15 @@
 from tensorflow.python.framework.ops import disable_eager_execution
 disable_eager_execution()
 
-import argparse
-import json
 from keras import backend as K
 from keras.losses import categorical_crossentropy
-from keras.layers import Layer
 from keras.layers import Input, LSTM, TimeDistributed
 from keras.layers.core import Dense, Lambda
 from keras.models import Model
 from nltk.tokenize import word_tokenize
 from ocpa.algo.conformance.precision_and_fitness import evaluator as quality_measure_factory
-import tensorflow as tf
-import pandas as pd
 import numpy as np
-import codecs
-import os, re
-from tqdm import tqdm
-import random
-from datetime import datetime, timedelta
-import time
+
 
 
 def create_lstm_vae(input_dim,
