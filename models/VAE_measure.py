@@ -232,11 +232,22 @@ def VAE_generalization(ocel_gen, ocpn):
 
 
 def create_VAE_input(ocel, save_path=None):
-    # we create another dictionary that only contains the the value inside the list to be able to derive the case
+    """
+    Creates the input for the VAE when the training is done on the original log
+    :param ocel: object-centric event log
+    :param save_path: path to save the input
+    :return: input train_log for the VAE
+    """
+    # we create another dictionary that only contains the value inside the list to be able to derive the case
     mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
 
     # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
     ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
+
+    # Remove whitespaces from the event_activity column for better training
+    ocel.log.log['event_activity_new'] = ocel.log.log['event_activity'].str.replace(' ', '')
+
+
     # Sort the DataFrame by 'event_timestamp' within each group
     sorted_df = ocel.log.log.groupby('event_execution').apply(lambda x: x.sort_values('event_timestamp'))
 
@@ -244,7 +255,7 @@ def create_VAE_input(ocel, save_path=None):
     sorted_df = sorted_df.reset_index(drop=True)
 
     # Concatenate the 'event_activity' values within each group into a single string
-    train_log = sorted_df.groupby('event_execution')['event_activity'].apply(lambda x: ' '.join(x)).tolist()
+    train_log = sorted_df.groupby('event_execution')['event_activity_new'].apply(lambda x: ' '.join(x)).tolist()
     # save the file if a save_path is given to retrieve it again
     if save_path is not None:
         with open(save_path, "w") as file:

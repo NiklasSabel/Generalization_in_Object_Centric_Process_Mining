@@ -10,27 +10,20 @@ from src.utils import get_happy_path_log, create_flower_model, generate_variant_
 
 print('Load file')
 
-filename = "../src/data/jsonocel/DS3.jsonocel"
-ocel = ocel_import_factory.apply(filename)
-ocpn = ocpn_discovery_factory.apply(ocel, parameters={"debug": False})
+object_types = ["incident","customer"]
+
+parameters = {"obj_names": object_types,
+              "val_names": [],
+              "act_name": "event_activity",
+              "time_name": "event_timestamp",
+              "sep": ","}
+ocel_gen = ocel_import_factory_csv.apply(file_path='../src/data/VAE_generated/DS3_process_sampled.csv', parameters=parameters)
 
 
+print('Save file GEN DS3')
 
-print('Save file happy')
-
-happy_path__ocel = get_happy_path_log(filename)
-
-happy_path_ocpn = ocpn_discovery_factory.apply(happy_path__ocel, parameters={"debug": False})
+with open("../src/data/csv/DS3_ocel_gen.pickle", 'wb') as fp:
+	pickle.dump(ocel_gen, fp)
 
 
-
-with open("../src/data/csv/DS3_ocpn_happy.pickle", 'wb') as fp:
-	pickle.dump(happy_path_ocpn, fp)
-
-print('Save file flower')
-
-ots = ["incident","customer"]
-flower_ocpn = create_flower_model(filename,ots)
-
-with open("../src/data/csv/DS3_ocpn_flower.pickle", 'wb') as fp:
-	pickle.dump(flower_ocpn, fp)
+print('Finished')

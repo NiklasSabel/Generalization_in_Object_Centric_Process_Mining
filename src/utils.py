@@ -414,6 +414,7 @@ def sample_traces(ocel, ocpn, amount, length = None, save_path = None):
             if end_activities and all(x in trace for x in end_activities):
                 break
         event_log_sampled.append(trace)
+    event_log_sampled = [[value.replace(' ', '') for value in inner_list] for inner_list in event_log_sampled]
     if save_path is not None:
         with open(save_path, "w", encoding="utf-8") as file:
             for sentence in event_log_sampled:
@@ -435,11 +436,22 @@ def process_log(gen_log, ocel, ocpn, save_path = None):
     for transition in ocpn.transitions:
         if not transition.silent:
             mapping_dict[transition.name] = list(transition.preset_object_type)
-    # get the unique activities in the log
+    # get the unique original activities in the log
     activities = np.unique(ocel.log.log.event_activity)
+
+    # Create a dictionary mapping modified strings to original values
+    mapping_dict_values = {activity.replace(' ', '').lower(): activity.lower() for activity in activities}
+
+    new_log = []
+    for inner_list in gen_log:
+        inner_list = inner_list[0].split()  # Split the single string into individual words
+        adjusted_inner_list = [mapping_dict_values.get(word, word) for word in inner_list]
+        adjusted_string = ' '.join(adjusted_inner_list)
+        new_log.append([adjusted_string])  # Wrap the reversed string in a new list
+
     original_log = []
     # Iterate over each inner list in gen_log
-    for inner_list in gen_log:
+    for inner_list in new_log:
         # Create an empty list to store the original activity names
         original_inner_list = []
 
