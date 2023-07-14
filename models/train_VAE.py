@@ -1,204 +1,25 @@
 from tensorflow.python.framework.ops import disable_eager_execution
 disable_eager_execution()
-from ocpa.algo.conformance.precision_and_fitness import evaluator as quality_measure_factory
-import numpy as np
-import pickle
-import logging
-import pandas as pd
-import pandas as pd
-import numpy as np
 
-
-import argparse
-import json
 from keras import backend as K
 from keras.losses import categorical_crossentropy
-from keras.layers import Layer
 from keras.layers import Input, LSTM, TimeDistributed
 from keras.layers.core import Dense, Lambda
 from keras.models import Model
 from nltk.tokenize import word_tokenize
 from ocpa.algo.conformance.precision_and_fitness import evaluator as quality_measure_factory
-import tensorflow as tf
-import pandas as pd
-import numpy as np
-import codecs
-import os, re
+
+import logging
+from ocpa.algo.discovery.ocpn import algorithm as ocpn_discovery_factory
 from tqdm import tqdm
+import numpy as np
+import time
+import pandas as pd
 import random
 from datetime import datetime, timedelta
-import time
+import pickle
 
 
-def process_log(gen_log, ocel, ocpn, save_path = None):
-    """
-    This function takes a generated log and converts it to a log that can be used by the ocel object
-    :param gen_log: the generated log
-    :param ocel: the original ocel object where the sampled log is based on
-    :param ocpn: the original ocpn object where the sampled log is based on
-    :return: the final log as pandas dataframe
-    """
-    # generate mapping dictionary for activities and objects
-    mapping_dict = {}
-    for transition in ocpn.transitions:
-        if not transition.silent:
-            mapping_dict[transition.name] = list(transition.preset_object_type)
-    # get the unique original activities in the log
-    activities = np.unique(ocel.log.log.event_activity)
-
-    # Create a dictionary mapping modified strings to original values
-    mapping_dict_values = {activity.replace(' ', '').lower(): activity.lower() for activity in activities}
-
-    new_log = []
-    for inner_list in gen_log:
-        inner_list = inner_list[0].split()  # Split the single string into individual words
-        adjusted_inner_list = [mapping_dict_values.get(word, word) for word in inner_list]
-        adjusted_string = ' '.join(adjusted_inner_list)
-        new_log.append([adjusted_string])  # Wrap the reversed string in a new list
-
-    original_log = []
-    # Iterate over each inner list in gen_log
-    for inner_list in new_log:
-        # Create an empty list to store the original activity names
-        original_inner_list = []
-
-        # Split the concatenated activities into individual words
-        activities_in_inner_list = inner_list[0].split()
-
-        # Initialize the index variable
-        i = 0
-        # Loop through the activities_in_inner_list
-        while i < len(activities_in_inner_list):
-            # Initialize a variable to store the matched activity
-            matched_activity = None
-            # Loop through the activities list to find a match
-            for activity in activities:
-                # Check if the concatenated words match the activity
-                if ' '.join(activities_in_inner_list[i:i + len(activity.split())]).lower() == activity.lower():
-                    # Set the matched activity
-                    matched_activity = activity
-                    # Break the loop as a match is found
-                    break
-
-            # Check if a match is found
-            if matched_activity:
-                # Append the matched activity to the original_inner_list
-                original_inner_list.append(matched_activity)
-                # Update the index by the number of words in the matched activity
-                i += len(matched_activity.split())
-            else:
-                # If no match is found, update the index by 1 to move to the next word
-                i += 1
-
-        # Append the original_inner_list to the original_log
-        original_log.append(original_inner_list)
-    # Create an empty list to store the data
-    data = []
-
-    # Define the start and end date in 2022
-    start_date = datetime(2022, 1, 1)
-
-    # Variables for tracking the date and count
-    current_date = start_date
-    count = 0
-
-    # Iterate over each inner list in original_log
-    for inner_list in original_log:
-
-        # Get the activities in the inner list
-        activities = inner_list
-
-        # Generate a random timestamp within the execution day
-        execution_time = random.uniform(0, 1) * 24
-        execution_timestamp = current_date + timedelta(hours=execution_time)
-
-        # Create a dictionary to store the column values for each activity
-        activity_dict = {
-            'event_activity': [],
-            'event_execution': [],
-            'event_timestamp': []
-        }
-
-        # Add each activity, execution, and timestamp to the data list
-        for activity in activities:
-
-            activity_dict['event_activity'].append(activity)
-            activity_dict['event_execution'].append(count + 1)
-            activity_dict['event_timestamp'].append(execution_timestamp.strftime('%Y-%m-%d %H:%M:%S.%f'))
-
-            # Check if the count is a multiple of 100
-            if count % 100 == 0:
-                current_date += timedelta(days=1)  # Increase the date by 1
-
-            # Increment the timestamp for the next activity within the same execution
-            execution_timestamp += timedelta(minutes=1)
-        count += 1
-        # Get the distinct object types for the activities in the inner list
-        object_types = set()
-        for activity in activities:
-            object_types.update(mapping_dict.get(activity, []))
-
-        # Add columns for each distinct object type and initialize with empty values
-        for object_type in object_types:
-            activity_dict[object_type] = [''] * len(activities)
-
-        # Update the column values with the corresponding objects
-        for idx, activity in enumerate(activities):
-            objects = mapping_dict.get(activity, [])
-            for object_type in objects:
-                activity_dict[object_type][idx] = [f"{object_type}{count}"]
-
-        # Fill empty values in object columns with an empty list
-        for object_type in object_types:
-            activity_dict[object_type] = [value if value != '' else [] for value in activity_dict[object_type]]
-
-        # Extend the data list with the activity_dict
-        data.extend([{k: v[i] for k, v in activity_dict.items()} for i in range(len(activities))])
-
-    # Convert the data list into a pandas DataFrame
-    df_log = pd.DataFrame(data)
-    # Include the index as a column
-    df_log.reset_index(inplace=True)
-
-    # Rename the index column to 'event_id'
-    df_log.rename(columns={'index': 'event_id'}, inplace=True)
-
-    if save_path is not None:
-        df_log.to_csv(save_path, index=False)
-
-    return df_log
-def create_VAE_input(ocel, save_path=None):
-    """
-    Creates the input for the VAE when the training is done on the original log
-    :param ocel: object-centric event log
-    :param save_path: path to save the input
-    :return: input train_log for the VAE
-    """
-    # we create another dictionary that only contains the value inside the list to be able to derive the case
-    mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
-
-    # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
-    ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
-
-    # Remove whitespaces from the event_activity column for better training
-    ocel.log.log['event_activity_new'] = ocel.log.log['event_activity'].str.replace(' ', '')
-
-
-    # Sort the DataFrame by 'event_timestamp' within each group
-    sorted_df = ocel.log.log.groupby('event_execution').apply(lambda x: x.sort_values('event_timestamp'))
-
-    # Reset the index to remove the index level
-    sorted_df = sorted_df.reset_index(drop=True)
-
-    # Concatenate the 'event_activity' values within each group into a single string
-    train_log = sorted_df.groupby('event_execution')['event_activity_new'].apply(lambda x: ' '.join(x)).tolist()
-    # save the file if a save_path is given to retrieve it again
-    if save_path is not None:
-        with open(save_path, "w") as file:
-            for sentence in train_log:
-                line = "".join(sentence) + "\n"
-                file.write(line)
-    return train_log
 def create_lstm_vae(input_dim,
                     batch_size,  # we need it for sampling
                     intermediate_dim,
@@ -389,60 +210,251 @@ def get_text_data(data_path, num_samples=1000):
     return max_encoder_seq_length, num_encoder_tokens, input_characters, input_token_index, reverse_input_char_index, \
            encoder_input_data, decoder_input_data
 
-print("Loading data...")
 
-ocel = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_log.pickle')
+def VAE_generalization(ocel_gen, ocpn):
+    """
+    Calculates the generalization of the generated object-centric event log from the VAE
+    :param ocel_gen: generated object-centric event log
+    :param ocpn: original object-centric process net
+    :return: generalization
+    """
+    # use precision and fitness from the ocpa package
+    precision, fitness = quality_measure_factory.apply(ocel_gen, ocpn)
+    print("Precision of IM-discovered net: ",np.round(precision,4))
+    print("Fitness of IM-discovered net: ", np.round(fitness,4))
+    # calculate generalization as harmonic mean of precision and fitness
+    generalization = 2 * ((fitness * precision) / (fitness + precision))
+    print("VAE Generalization=", np.round(generalization,4))
 
-
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_ocpn.pickle", "rb") as file:
-    ocpn = pickle.load(file)
-
-print("Data loaded")
-
-
-train_log = create_VAE_input(ocel,'../src/data/VAE_input/DS4.txt')
-
-print("Data processed")
-
-
-timesteps_max, enc_tokens, characters, char2id, id2char, x, x_decoder = get_text_data(num_samples=10000,
-                                                                                      data_path='/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/VAE_input/DS4.txt')
-
-print(x.shape, "Creating model...")
-
-input_dim, timesteps = x.shape[-1], x.shape[-2]
-batch_size, latent_dim = 1, 191
-intermediate_dim, epochs = 353, 20
-
-vae, enc, gen, stepper = create_lstm_vae(input_dim,
-                                         batch_size=batch_size,
-                                         intermediate_dim=intermediate_dim,
-                                         latent_dim=latent_dim,
-                                        )
-print("Training model...")
-
-vae.fit([x, x_decoder], x, epochs=epochs, verbose=1)
-
-print("Fitted, predicting...")
-#rearrange the input data and get the max amount of characters
-max_length = max(len(string) for string in train_log)
-
-def decode(s):
-    return decode_sequence(s, gen, stepper, input_dim, char2id, id2char, max_length)
-
-log = []
-
-for _ in tqdm(range(500), desc="Sample Traces"):
-
-    id_from = np.random.randint(0, x.shape[0] - 1)
-
-    m_from, std_from = enc.predict([[x[id_from]]])
-
-    seq_from = np.random.normal(size=(latent_dim,))
-    seq_from = m_from + std_from * seq_from
-
-    #print(decode(seq_from))
-    log.append([decode(seq_from)])
+    return generalization
 
 
-df_log = process_log(log, ocel, ocpn, '/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/VAE_generated/DS4_process_sampled.csv')
+def create_VAE_input(ocel, save_path=None):
+    """
+    Creates the input for the VAE when the training is done on the original log
+    :param ocel: object-centric event log
+    :param save_path: path to save the input
+    :return: input train_log for the VAE
+    """
+    # we create another dictionary that only contains the value inside the list to be able to derive the case
+    mapping_dict = {key: ocel.process_execution_mappings[key][0] for key in ocel.process_execution_mappings}
+
+    # we generate a new column in the class (log) that contains the process execution (case) number via the generated dictionary
+    ocel.log.log['event_execution'] = ocel.log.log.index.map(mapping_dict)
+
+    # Remove whitespaces from the event_activity column for better training
+    ocel.log.log['event_activity_new'] = ocel.log.log['event_activity'].str.replace(' ', '')
+
+
+    # Sort the DataFrame by 'event_timestamp' within each group
+    sorted_df = ocel.log.log.groupby('event_execution').apply(lambda x: x.sort_values('event_timestamp'))
+
+    # Reset the index to remove the index level
+    sorted_df = sorted_df.reset_index(drop=True)
+
+    # Concatenate the 'event_activity' values within each group into a single string
+    train_log = sorted_df.groupby('event_execution')['event_activity_new'].apply(lambda x: ' '.join(x)).tolist()
+    # save the file if a save_path is given to retrieve it again
+    if save_path is not None:
+        with open(save_path, "w") as file:
+            for sentence in train_log:
+                line = "".join(sentence) + "\n"
+                file.write(line)
+    return train_log
+
+
+def process_log(gen_log, ocel, ocpn, save_path = None):
+    """
+    This function takes a generated log and converts it to a log that can be used by the ocel object
+    :param gen_log: the generated log
+    :param ocel: the original ocel object where the sampled log is based on
+    :param ocpn: the original ocpn object where the sampled log is based on
+    :return: the final log as pandas dataframe
+    """
+    # generate mapping dictionary for activities and objects
+    mapping_dict = {}
+    for transition in ocpn.transitions:
+        if not transition.silent:
+            mapping_dict[transition.name] = list(transition.preset_object_type)
+    # get the unique original activities in the log
+    activities = np.unique(ocel.log.log.event_activity)
+
+    # Create a dictionary mapping modified strings to original values
+    mapping_dict_values = {activity.replace(' ', '').lower(): activity.lower() for activity in activities}
+
+    new_log = []
+    for inner_list in gen_log:
+        inner_list = inner_list[0].split()  # Split the single string into individual words
+        adjusted_inner_list = [mapping_dict_values.get(word, word) for word in inner_list]
+        adjusted_string = ' '.join(adjusted_inner_list)
+        new_log.append([adjusted_string])  # Wrap the reversed string in a new list
+
+    original_log = []
+    # Iterate over each inner list in gen_log
+    for inner_list in new_log:
+        # Create an empty list to store the original activity names
+        original_inner_list = []
+
+        # Split the concatenated activities into individual words
+        activities_in_inner_list = inner_list[0].split()
+
+        # Initialize the index variable
+        i = 0
+        # Loop through the activities_in_inner_list
+        while i < len(activities_in_inner_list):
+            # Initialize a variable to store the matched activity
+            matched_activity = None
+            # Loop through the activities list to find a match
+            for activity in activities:
+                # Check if the concatenated words match the activity
+                if ' '.join(activities_in_inner_list[i:i + len(activity.split())]).lower() == activity.lower():
+                    # Set the matched activity
+                    matched_activity = activity
+                    # Break the loop as a match is found
+                    break
+
+            # Check if a match is found
+            if matched_activity:
+                # Append the matched activity to the original_inner_list
+                original_inner_list.append(matched_activity)
+                # Update the index by the number of words in the matched activity
+                i += len(matched_activity.split())
+            else:
+                # If no match is found, update the index by 1 to move to the next word
+                i += 1
+
+        # Append the original_inner_list to the original_log
+        original_log.append(original_inner_list)
+    # Create an empty list to store the data
+    data = []
+
+    # Define the start and end date in 2022
+    start_date = datetime(2022, 1, 1)
+
+    # Variables for tracking the date and count
+    current_date = start_date
+    count = 0
+
+    # Iterate over each inner list in original_log
+    for inner_list in original_log:
+
+        # Get the activities in the inner list
+        activities = inner_list
+
+        # Generate a random timestamp within the execution day
+        execution_time = random.uniform(0, 1) * 24
+        execution_timestamp = current_date + timedelta(hours=execution_time)
+
+        # Create a dictionary to store the column values for each activity
+        activity_dict = {
+            'event_activity': [],
+            'event_execution': [],
+            'event_timestamp': []
+        }
+
+        # Add each activity, execution, and timestamp to the data list
+        for activity in activities:
+
+            activity_dict['event_activity'].append(activity)
+            activity_dict['event_execution'].append(count + 1)
+            activity_dict['event_timestamp'].append(execution_timestamp.strftime('%Y-%m-%d %H:%M:%S.%f'))
+
+            # Check if the count is a multiple of 100
+            if count % 100 == 0:
+                current_date += timedelta(days=1)  # Increase the date by 1
+
+            # Increment the timestamp for the next activity within the same execution
+            execution_timestamp += timedelta(minutes=1)
+        count += 1
+        # Get the distinct object types for the activities in the inner list
+        object_types = set()
+        for activity in activities:
+            object_types.update(mapping_dict.get(activity, []))
+
+        # Add columns for each distinct object type and initialize with empty values
+        for object_type in object_types:
+            activity_dict[object_type] = [''] * len(activities)
+
+        # Update the column values with the corresponding objects
+        for idx, activity in enumerate(activities):
+            objects = mapping_dict.get(activity, [])
+            for object_type in objects:
+                activity_dict[object_type][idx] = [f"{object_type}{count}"]
+
+        # Fill empty values in object columns with an empty list
+        for object_type in object_types:
+            activity_dict[object_type] = [value if value != '' else [] for value in activity_dict[object_type]]
+
+        # Extend the data list with the activity_dict
+        data.extend([{k: v[i] for k, v in activity_dict.items()} for i in range(len(activities))])
+
+    # Convert the data list into a pandas DataFrame
+    df_log = pd.DataFrame(data)
+    # Include the index as a column
+    df_log.reset_index(inplace=True)
+
+    # Rename the index column to 'event_id'
+    df_log.rename(columns={'index': 'event_id'}, inplace=True)
+
+    if save_path is not None:
+        df_log.to_csv(save_path, index=False)
+
+    return df_log
+
+def create_VAE_logs(filename, sample_size):
+    ocel = pd.read_pickle(f'/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/runtime/{filename}_{sample_size}.pickle')
+    with open(
+            f"/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/runtime/{filename}_{sample_size}_ocpn.pickle",
+            "rb") as file:
+        ocpn = pickle.load(file)
+    train_log = create_VAE_input(ocel, f'/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/runtime/VAE/{filename}_{sample_size}.txt')
+    start_time = time.time()
+    timesteps_max, enc_tokens, characters, char2id, id2char, x, x_decoder = get_text_data(num_samples=sample_size,
+                                                                                          data_path=f'../src/data/runtime/VAE/{filename}_{sample_size}.txt')
+    input_dim, timesteps = x.shape[-1], x.shape[-2]
+    batch_size, latent_dim = 1, 191
+    intermediate_dim, epochs = 353, 20
+
+    vae, enc, gen, stepper = create_lstm_vae(input_dim,
+                                             batch_size=batch_size,
+                                             intermediate_dim=intermediate_dim,
+                                             latent_dim=latent_dim,
+                                             )
+    vae.fit([x, x_decoder], x, epochs=epochs, verbose=1)
+
+    # rearrange the input data and get the max amount of characters
+    max_length = max(len(string) for string in train_log)
+
+    def decode(s):
+        return decode_sequence(s, gen, stepper, input_dim, char2id, id2char, max_length)
+
+    log = []
+
+    for _ in tqdm(range(sample_size), desc="Sample Traces"):
+        id_from = np.random.randint(0, x.shape[0] - 1)
+
+        m_from, std_from = enc.predict([[x[id_from]]])
+
+        seq_from = np.random.normal(size=(latent_dim,))
+        seq_from = m_from + std_from * seq_from
+
+        # print(decode(seq_from))
+        log.append([decode(seq_from)])
+    df_log = process_log(log, ocel, ocpn, f'/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/runtime/VAE/{filename}_{sample_size}_generated.csv')
+    execution_time = np.round(time.time() - start_time, 4)
+    print(f"The execution time for VAE training for {filename} with {sample_size} traces is {execution_time} seconds")
+
+
+
+
+# Set up the logger
+logging.basicConfig(filename='train_VAE_gen.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+
+filenames = ["DS4"]
+sample_sizes = [500, 800]
+for filename in filenames:
+    for sample_size in sample_sizes:
+        create_VAE_logs(filename,sample_size)
+        logging.info(f"*** VAE {sample_size} samples trained ***")

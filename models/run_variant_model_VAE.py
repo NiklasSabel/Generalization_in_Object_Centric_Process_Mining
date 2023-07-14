@@ -25,26 +25,13 @@ def VAE_generalization(ocel_gen, ocpn):
 
 logging.basicConfig(filename='VAE_sample_variants.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-logging.info("*** VAE DS3 Original OCPN**")
-ocel_gen = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_ocel_gen.pickle')
+logging.info("*** VAE DS4 Variant OCPN**")
+ocel_gen = pd.read_pickle('/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_ocel_gen.pickle')
 logging.info("*** OCEL loaded**")
 
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_variant_ocpn.pickle", "rb") as file:
-    ocpn = pickle.load(file)
-
-logging.info("*** OCPN loaded**")
 
 
-generalization = VAE_generalization(ocel_gen, ocpn)
-print(generalization)
-
-logging.info(f'The value of generalization for VAE original for ds3 ocpn is {generalization}')
-
-
-
-logging.info("*** VAE DS3 Original Variant**")
-
-with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS3_variant_ocpn.pickle", "rb") as file:
+with open("/pfs/data5/home/ma/ma_ma/ma_nsabel/Generalization_in_Object_Centric_Process_Mining/src/data/csv/DS4_variant_ocpn.pickle", "rb") as file:
     variant_ocpn = pickle.load(file)
 
 logging.info("*** OCPN loaded**")

@@ -8,22 +8,21 @@ from src.utils import get_happy_path_log, create_flower_model, generate_variant_
 
 
 
+
 print('Load file')
 
-object_types = ["incident","customer"]
-
-parameters = {"obj_names": object_types,
-              "val_names": [],
-              "act_name": "event_activity",
-              "time_name": "event_timestamp",
-              "sep": ","}
-ocel_gen = ocel_import_factory_csv.apply(file_path='../src/data/VAE_generated/DS3_process_sampled.csv', parameters=parameters)
-
-
-print('Save file GEN DS3')
-
-with open("../src/data/csv/DS3_ocel_gen.pickle", 'wb') as fp:
-	pickle.dump(ocel_gen, fp)
+filenames = ["DS4"]
+sample_sizes = [500, 800]
+for filename in filenames:
+    for sample_size in sample_sizes:
+        ocel = ocel_import_factory.apply(
+            f"../src/data/runtime/{filename}_{sample_size}.jsonocel")
+        with open(f"../src/data/runtime/{filename}_{sample_size}.pickle", 'wb') as fp:
+            pickle.dump(ocel, fp)
+        ocpn = ocpn_discovery_factory.apply(ocel, parameters={"debug": False})
+        with open(f"../src/data/runtime/{filename}_{sample_size}_ocpn.pickle", 'wb') as fp:
+            pickle.dump(ocpn, fp)
+        print(f'Finished {sample_size}')
 
 
-print('Finished')
+
