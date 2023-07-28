@@ -2,10 +2,6 @@ import warnings
 warnings.filterwarnings('ignore')
 from ocpa.objects.log.importer.csv import factory as ocel_import_factory_csv
 import pickle
-from ocpa.objects.log.importer.ocel import factory as ocel_import_factory
-from ocpa.algo.discovery.ocpn import algorithm as ocpn_discovery_factory
-from src.utils import get_happy_path_log, create_flower_model, generate_variant_model
-
 
 
 
